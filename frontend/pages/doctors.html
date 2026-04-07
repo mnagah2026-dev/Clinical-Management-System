@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CMS — Doctors Directory</title>
+  <meta name="description" content="Find the best clinical specialists using our comprehensive doctor directory.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Doctors Directory — CMS">
+  <meta property="og:description" content="Find world-class clinical specialists. Search by specialty, availability, and ratings.">
+  <meta property="og:image" content="/assets/logo.svg">
+  <meta property="og:site_name" content="Clinical Management System">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Doctors Directory — CMS">
+  <meta name="twitter:description" content="Find the best clinical specialists using our comprehensive doctor directory.">
+  <link rel="stylesheet" href="/css/index.css">
+  <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+</head>
+<body>
+
+  <!-- ════════════════ NAVIGATION ════════════════ -->
+  <nav class="nav" id="main-nav">
+    <div class="nav__logo">
+      <img src="/assets/logo.svg" alt="CMS Logo" id="nav-logo">
+      <span class="nav__logo-text">CMS</span>
+    </div>
+    <div class="nav__links">
+      <a href="/pages/index.html" class="nav__link" id="nav-home">Home</a>
+      <a href="/pages/doctors.html" class="nav__link active" id="nav-doctors">Doctors Directory</a>
+      <a href="/pages/about.html" class="nav__link" id="nav-about">About</a>
+      <a href="/pages/about.html#contact" class="nav__link" id="nav-contact">Contact Us</a>
+    </div>
+    <div class="nav__actions" id="nav-actions">
+      <a href="/pages/login.html" class="nav__link" id="nav-get-started">Get Started</a>
+      <a href="/pages/register.html" class="btn btn-primary btn-sm" id="nav-register">Register</a>
+    </div>
+  </nav>
+
+  <!-- ════════════════ PAGE HEADER ════════════════ -->
+  <section class="section" style="padding-top: calc(var(--nav-height) + var(--space-12)); padding-bottom: var(--space-8);">
+    <div class="section__header" style="flex-direction: column; align-items: center; text-align: center; margin-bottom: var(--space-8);">
+      <div class="section__eyebrow">Expert Network</div>
+      <h1 class="section__title" style="font-size: var(--display-sm);">Our Specialists</h1>
+      <p class="section__subtitle" style="margin: 0 auto;">
+        Filter by department or search to find the right clinical expert for your needs.
+      </p>
+    </div>
+
+    <!-- Filter & Search Bar -->
+    <div class="glass-panel glass-panel--elevated" style="display: flex; gap: var(--space-4); margin-bottom: var(--space-12); padding: var(--space-4) var(--space-6);">
+      <div class="input-wrapper" style="flex: 2;">
+        <span class="input-icon">🔍</span>
+        <input type="text" id="search-input" class="input-field input-field--icon" placeholder="Search doctor name...">
+      </div>
+      <div style="flex: 1;">
+        <select id="specialty-filter" class="input-field">
+          <option value="">All Specialties</option>
+          <!-- Populated by JS -->
+        </select>
+      </div>
+    </div>
+    
+    <!-- Doctor Grid -->
+    <div id="doctors-grid" class="specialties-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-6);">
+      <!-- Loading Skeleton -->
+      <div style="grid-column: 1 / -1; display: flex; justify-content: center; padding: var(--space-12);">
+        <div class="spinner"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════ CTA ════════════════ -->
+  <section class="cta" id="cta-section">
+    <div class="cta__inner">
+      <h2 class="cta__title">Ready to book an <span>appointment</span>?</h2>
+      <p class="cta__desc">Join our platform to book directly with your chosen specialist.</p>
+      <a href="/pages/register.html" class="btn btn-primary btn-lg" style="position: relative;">Create Patient Portal</a>
+    </div>
+  </section>
+
+  <!-- ════════════════ FOOTER ════════════════ -->
+  <footer class="footer" id="main-footer">
+    <div class="footer__grid">
+      <div>
+        <div class="footer__brand-name">CMS</div>
+        <p class="footer__brand-desc">Elevating medical standards through high-performance software and precision clinical management tools.</p>
+      </div>
+      <div>
+        <div class="footer__col-title">Quick Links</div>
+        <a href="/pages/login.html" class="footer__link">Patient Portal</a>
+        <a href="/pages/doctors.html" class="footer__link">Find a Doctor</a>
+        <a href="/pages/about.html" class="footer__link">Emergency Services</a>
+        <a href="#" class="footer__link">Clinical Trials</a>
+      </div>
+      <div>
+        <div class="footer__col-title">Official Hours</div>
+        <span class="footer__link">Emergency: 24/7</span>
+        <span class="footer__link">OPD: 08:00 – 20:00</span>
+        <span class="footer__link">Lab: 06:00 – 22:00</span>
+        <span class="footer__link">Pharmacy: 24/7</span>
+      </div>
+      <div>
+        <div class="footer__col-title">Contact Info</div>
+        <span class="footer__link">📍 Medical Center, District 7</span>
+        <span class="footer__link">📞 +1 (800) CMS-CARE</span>
+        <span class="footer__link">✉️ contact@cms.precise.com</span>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span class="footer__copyright">&copy; 2024 Clinical Management System. Precision in Care.</span>
+      <div class="footer__legal">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/doctors.js"></script>
+</body>
+</html>

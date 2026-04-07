@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Patient Records — Doctor Portal</title>
+  <link rel="stylesheet" href="/css/index.css">
+  <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+</head>
+<body>
+
+  <!-- ════════════════ NAVIGATION ════════════════ -->
+  <nav class="nav" id="main-nav">
+    <div class="nav__logo">
+      <img src="/assets/logo.svg" alt="CMS Logo" id="nav-logo">
+      <span class="nav__logo-text">CMS</span>
+    </div>
+    <div class="nav__links">
+      <span class="badge badge--secondary">Doctor Portal</span>
+    </div>
+    <div class="nav__actions" id="nav-actions">
+      <!-- Populated by auth.js -->
+    </div>
+  </nav>
+
+  <!-- ════════════════ DASHBOARD LAYOUT ════════════════ -->
+  <div class="dashboard">
+    <aside class="sidebar">
+      <div style="padding: var(--space-4) 0 var(--space-8);">
+        <div style="font-family: var(--font-label); font-size: var(--label-md); color: var(--outline); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: var(--space-4);">Menu</div>
+        <a href="/pages/doctor/dashboard.html" class="sidebar__link">📊 Dashboard</a>
+        <a href="/pages/doctor/appointments.html" class="sidebar__link">📅 Appointments</a>
+        <a href="/pages/doctor/records.html" class="sidebar__link active">📋 Patient Records</a>
+        <a href="/pages/doctor/diagnosis.html" class="sidebar__link">🩺 Diagnosis & Rx</a>
+        <a href="/pages/doctor/profile.html" class="sidebar__link">👤 Profile & Settings</a>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <div style="margin-bottom: var(--space-8);">
+        <h1 class="section__title" style="margin-bottom: var(--space-2);">Patient Records</h1>
+        <p class="section__subtitle">Search and access comprehensive medical histories and vital sign logs.</p>
+      </div>
+
+      <!-- Search Box -->
+      <div class="glass-panel glass-panel--elevated animate-on-scroll" style="margin-bottom: var(--space-8);">
+        <form id="patient-search-form" style="display: flex; gap: var(--space-4);">
+          <div class="input-wrapper" style="flex: 1;">
+            <span class="input-icon">🔍</span>
+            <input type="text" id="search-query" class="input-field input-field--icon" placeholder="Search by patient name or ID..." required minlength="2">
+          </div>
+          <button type="submit" class="btn btn-secondary">Search Cohort</button>
+        </form>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 2fr; gap: var(--space-8);">
+        
+        <!-- Search Results (Left Column) -->
+        <div class="glass-panel animate-on-scroll" style="align-self: flex-start; max-height: 600px; overflow-y: auto;">
+           <h2 class="card__title" style="margin-bottom: var(--space-4); font-size: var(--title-md);">Search Results</h2>
+           <div id="search-results-list" style="display: flex; flex-direction: column; gap: var(--space-3);">
+             <div style="text-align: center; color: var(--on-surface-variant); padding: var(--space-4); font-size: var(--body-sm);">Use the search bar above to locate a patient.</div>
+           </div>
+        </div>
+
+        <!-- Details Pane (Right Column) -->
+        <div id="patient-details-pane" class="glass-panel glass-panel--elevated animate-on-scroll hidden">
+          
+          <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: var(--space-6);">
+            <div>
+              <h2 id="pd-name" style="font-size: var(--headline-sm); font-weight: 700;">Patient Name</h2>
+              <div class="badge badge--tertiary" id="pd-id" style="font-family: var(--font-label); margin-top: var(--space-2);">ID: --</div>
+            </div>
+            <a href="#" id="btn-start-diagnosis" class="btn btn-primary btn-sm">Start Diagnosis</a>
+          </div>
+          
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); margin-bottom: var(--space-8); padding: var(--space-4); background: var(--surface-container-low); border-radius: var(--radius-md);">
+             <div><strong>DOB:</strong> <span id="pd-dob">--</span></div>
+             <div><strong>Gender:</strong> <span id="pd-gender">--</span></div>
+          </div>
+
+          <h3 style="font-size: var(--title-md); margin-bottom: var(--space-4); border-bottom: 1px solid rgba(68,70,78,0.2); padding-bottom: var(--space-2);">Recent Vital Signs</h3>
+          <div id="pd-vitals" style="margin-bottom: var(--space-8); font-size: var(--body-sm);">
+             <!-- Vitals data -->
+             <div class="spinner"></div>
+          </div>
+
+          <!-- Vital Signs Charts (Rule 20) -->
+          <div id="pd-charts" class="hidden" style="margin-bottom: var(--space-8);">
+            <h3 style="font-size: var(--title-md); margin-bottom: var(--space-4); border-bottom: 1px solid rgba(68,70,78,0.2); padding-bottom: var(--space-2);">Vital Signs Trends</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6);">
+              <div class="glass-panel" style="padding: var(--space-4);">
+                <h4 style="font-size: var(--label-md); color: var(--outline); margin-bottom: var(--space-3); text-transform: uppercase; letter-spacing: 0.05em;">Blood Pressure & Sugar</h4>
+                <canvas id="chart-bp-sugar" height="200"></canvas>
+              </div>
+              <div class="glass-panel" style="padding: var(--space-4);">
+                <h4 style="font-size: var(--label-md); color: var(--outline); margin-bottom: var(--space-3); text-transform: uppercase; letter-spacing: 0.05em;">Temperature & Weight</h4>
+                <canvas id="chart-temp-weight" height="200"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <h3 style="font-size: var(--title-md); margin-bottom: var(--space-4); border-bottom: 1px solid rgba(68,70,78,0.2); padding-bottom: var(--space-2);">Medical History & Prescriptions</h3>
+          <div id="pd-history" style="font-size: var(--body-sm);">
+             <!-- History data -->
+             <div class="spinner"></div>
+          </div>
+
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/doctor/records.js"></script>
+</body>
+</html>

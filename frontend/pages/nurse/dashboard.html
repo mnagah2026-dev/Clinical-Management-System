@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nurse Dashboard — CMS</title>
+  <link rel="stylesheet" href="/css/index.css">
+  <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+</head>
+<body>
+
+  <!-- ════════════════ NAVIGATION ════════════════ -->
+  <nav class="nav" id="main-nav">
+    <div class="nav__logo">
+      <img src="/assets/logo.svg" alt="CMS Logo" id="nav-logo">
+      <span class="nav__logo-text">CMS</span>
+    </div>
+    <div class="nav__links">
+      <span class="badge" style="background: var(--tertiary); color: var(--on-tertiary);">Nursing Staff Portal</span>
+    </div>
+    <div class="nav__actions" id="nav-actions">
+      <!-- Populated by auth.js -->
+    </div>
+  </nav>
+
+  <!-- ════════════════ DASHBOARD LAYOUT ════════════════ -->
+  <div class="dashboard">
+    <aside class="sidebar">
+      <div style="padding: var(--space-4) 0 var(--space-8);">
+        <div style="font-family: var(--font-label); font-size: var(--label-md); color: var(--outline); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: var(--space-4);">Menu</div>
+        <a href="/pages/nurse/dashboard.html" class="sidebar__link active">📊 Action Center</a>
+        <a href="/pages/nurse/vitals.html" class="sidebar__link">🌡️ Vital Signs Panel</a>
+        <a href="/pages/nurse/profile.html" class="sidebar__link">👤 Account Settings</a>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: var(--space-8);">
+        <div>
+          <h1 class="section__title" style="margin-bottom: var(--space-2);" id="welcome-msg">Action Center</h1>
+          <p class="section__subtitle">Quickly locate patients to log their clinical measurements.</p>
+        </div>
+      </div>
+
+      <!-- Quick Action / Search -->
+      <div class="glass-panel animate-on-scroll" style="margin-bottom: var(--space-8); display: flex; flex-direction: column; gap: var(--space-6);">
+        <h2 class="card__title">Locate Patient</h2>
+        <form id="patient-search-form" style="display: flex; gap: var(--space-4);">
+          <div class="input-wrapper" style="flex: 1;">
+            <span class="input-icon">🔍</span>
+            <input type="text" id="search-query" class="input-field input-field--icon" placeholder="Search patient by Name or ID..." required minlength="2">
+          </div>
+          <button type="submit" class="btn btn-primary" style="background: var(--tertiary); color: var(--on-tertiary);">Search Pipeline</button>
+        </form>
+
+        <div id="search-results-list" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: var(--space-4);">
+            <!-- Populated via JS -->
+             <div style="grid-column: 1/-1; text-align: center; color: var(--on-surface-variant); padding: var(--space-4); font-size: var(--body-sm);">Enter search query to find a patient.</div>
+        </div>
+      </div>
+
+      <!-- Today's Queue Placeholder -->
+      <div class="glass-panel animate-on-scroll">
+         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-6);">
+           <h2 class="card__title" style="margin: 0;">Clinic Status</h2>
+         </div>
+         <div style="display: flex; gap: var(--space-6);">
+            <div style="flex: 1; text-align: center; padding: var(--space-6); background: var(--surface-container-high); border-radius: var(--radius-md);">
+               <div style="font-size: 2rem; margin-bottom: var(--space-2);">🩺</div>
+               <div style="font-family: var(--font-label); color: var(--outline); font-size: var(--label-sm); text-transform: uppercase;">Active Doctors</div>
+               <div style="font-size: var(--title-lg); font-weight: 700; color: var(--primary);">4</div>
+            </div>
+            <div style="flex: 1; text-align: center; padding: var(--space-6); background: var(--surface-container-high); border-radius: var(--radius-md);">
+               <div style="font-size: 2rem; margin-bottom: var(--space-2);">🧑‍⚕️</div>
+               <div style="font-family: var(--font-label); color: var(--outline); font-size: var(--label-sm); text-transform: uppercase;">Nurses On Duty</div>
+               <div style="font-size: var(--title-lg); font-weight: 700; color: var(--tertiary);">12</div>
+            </div>
+            <div style="flex: 1; text-align: center; padding: var(--space-6); background: var(--surface-container-high); border-radius: var(--radius-md);">
+               <div style="font-size: 2rem; margin-bottom: var(--space-2);">🛏️</div>
+               <div style="font-family: var(--font-label); color: var(--outline); font-size: var(--label-sm); text-transform: uppercase;">Available Beds</div>
+               <div style="font-size: var(--title-lg); font-weight: 700; color: var(--success);">28</div>
+            </div>
+         </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/nurse/dashboard.js"></script>
+</body>
+</html>

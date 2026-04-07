@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Patient Dashboard — CMS</title>
+  <link rel="stylesheet" href="/css/index.css">
+  <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+</head>
+<body>
+
+  <!-- ════════════════ NAVIGATION ════════════════ -->
+  <nav class="nav" id="main-nav">
+    <div class="nav__logo">
+      <img src="/assets/logo.svg" alt="CMS Logo" id="nav-logo">
+      <span class="nav__logo-text">CMS</span>
+    </div>
+    <div class="nav__links">
+      <span class="badge badge--primary">Patient Portal</span>
+    </div>
+    <div class="nav__actions" id="nav-actions">
+      <!-- Populated by auth.js -->
+    </div>
+  </nav>
+
+  <!-- ════════════════ DASHBOARD LAYOUT ════════════════ -->
+  <div class="dashboard">
+    <aside class="sidebar">
+      <div style="padding: var(--space-4) 0 var(--space-8);">
+        <div style="font-family: var(--font-label); font-size: var(--label-md); color: var(--outline); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: var(--space-4);">Menu</div>
+        <a href="/pages/patient/dashboard.html" class="sidebar__link active">📊 Dashboard</a>
+        <a href="/pages/patient/appointments.html" class="sidebar__link">📅 Appointments</a>
+        <a href="/pages/patient/records.html" class="sidebar__link">📋 Medical Records</a>
+        <a href="/pages/patient/profile.html" class="sidebar__link">👤 Profile & Settings</a>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: var(--space-8);">
+        <div>
+          <h1 class="section__title" style="margin-bottom: var(--space-2);" id="welcome-msg">Welcome</h1>
+          <p class="section__subtitle">Here is an overview of your health profile and schedule.</p>
+        </div>
+        <a href="/pages/patient/appointments.html" class="btn btn-primary">Book Appointment</a>
+      </div>
+
+      <!-- Overview Cards -->
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6); margin-bottom: var(--space-12);">
+        
+        <div class="glass-panel glass-panel--glow animate-on-scroll">
+          <div style="display: flex; gap: var(--space-4); align-items: center; margin-bottom: var(--space-4);">
+            <div style="font-size: 2rem;">📅</div>
+            <div>
+              <div style="font-family: var(--font-label); color: var(--on-surface-variant); font-size: var(--label-sm); text-transform: uppercase; letter-spacing: 0.1em;">Next Appointment</div>
+              <div id="next-appt-time" style="font-size: var(--title-lg); font-weight: 700; color: var(--primary);">Loading...</div>
+            </div>
+          </div>
+          <div id="next-appt-doctor" style="color: var(--on-surface-variant); font-size: var(--body-md);">Please wait</div>
+        </div>
+
+        <div class="glass-panel animate-on-scroll">
+           <div style="display: flex; gap: var(--space-4); align-items: center; margin-bottom: var(--space-4);">
+            <div style="font-size: 2rem;">📋</div>
+            <div>
+              <div style="font-family: var(--font-label); color: var(--on-surface-variant); font-size: var(--label-sm); text-transform: uppercase; letter-spacing: 0.1em;">Total Records</div>
+              <div id="total-records" style="font-size: var(--title-lg); font-weight: 700;">--</div>
+            </div>
+          </div>
+          <a href="/pages/patient/records.html" class="btn btn-tertiary" style="padding: 0;">View Records History</a>
+        </div>
+
+        <div class="glass-panel animate-on-scroll">
+           <div style="display: flex; gap: var(--space-4); align-items: center; margin-bottom: var(--space-4);">
+            <div style="font-size: 2rem;">💊</div>
+            <div>
+              <div style="font-family: var(--font-label); color: var(--on-surface-variant); font-size: var(--label-sm); text-transform: uppercase; letter-spacing: 0.1em;">Active Prescriptions</div>
+              <div id="active-prescriptions" style="font-size: var(--title-lg); font-weight: 700; color: var(--secondary);">--</div>
+            </div>
+          </div>
+          <a href="/pages/patient/records.html" class="btn btn-tertiary" style="padding: 0; color: var(--secondary-dim);">View Active Rx</a>
+        </div>
+
+      </div>
+
+      <!-- Recent Activity Table -->
+      <div class="glass-panel animate-on-scroll">
+        <h2 class="card__title" style="margin-bottom: var(--space-6);">Recent Appointments</h2>
+        <div style="overflow-x: auto;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Date & Time</th>
+                <th>Doctor</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="recent-appts-tbody">
+              <tr>
+                <td colspan="4" style="text-align: center;">Loading data...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/patient/dashboard.js"></script>
+</body>
+</html>

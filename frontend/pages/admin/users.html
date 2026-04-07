@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Management — Admin Portal</title>
+  <link rel="stylesheet" href="/css/index.css">
+  <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+</head>
+<body>
+
+  <!-- ════════════════ NAVIGATION ════════════════ -->
+  <nav class="nav" id="main-nav">
+    <div class="nav__logo">
+      <img src="/assets/logo.svg" alt="CMS Logo" id="nav-logo">
+      <span class="nav__logo-text">CMS</span>
+    </div>
+    <div class="nav__links">
+      <span class="badge" style="background: var(--warning); color: var(--on-surface);">System Admin</span>
+    </div>
+    <div class="nav__actions" id="nav-actions">
+      <!-- Populated by auth.js -->
+    </div>
+  </nav>
+
+  <!-- ════════════════ DASHBOARD LAYOUT ════════════════ -->
+  <div class="dashboard">
+    <aside class="sidebar">
+      <div style="padding: var(--space-4) 0 var(--space-8);">
+        <div style="font-family: var(--font-label); font-size: var(--label-md); color: var(--outline); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: var(--space-4);">Admin Console</div>
+        <a href="/pages/admin/dashboard.html" class="sidebar__link">⚙️ System Health</a>
+        <a href="/pages/admin/users.html" class="sidebar__link active">👥 User Management</a>
+        <a href="/pages/admin/schedules.html" class="sidebar__link">📅 Schedule Management</a>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <div style="margin-bottom: var(--space-8); display: flex; justify-content: space-between; align-items: flex-end;">
+         <div>
+            <h1 class="section__title" style="margin-bottom: var(--space-2);">User Directory</h1>
+            <p class="section__subtitle">Manage roles, deactivate accounts, and oversee system access.</p>
+         </div>
+         <div class="input-wrapper" style="width: 300px;">
+            <span class="input-icon">🔍</span>
+            <input type="text" id="search-users" class="input-field input-field--icon" placeholder="Filter by email or role...">
+         </div>
+      </div>
+
+      <div class="glass-panel animate-on-scroll">
+         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-6);">
+            <h2 class="card__title" style="margin: 0;">Registered Accounts</h2>
+            <div style="display: flex; gap: var(--space-4); align-items: center;">
+               <span style="font-family: var(--font-label); font-size: var(--label-sm); text-transform: uppercase; color: var(--on-surface-variant);">Total: <span id="total-users-cnt">0</span></span>
+               <button class="btn btn-primary btn-sm" onclick="document.getElementById('add-user-modal').classList.remove('hidden')">+ Add User</button>
+            </div>
+         </div>
+         
+         <div style="overflow-x: auto;">
+            <table class="data-table">
+               <thead>
+                  <tr>
+                     <th>User ID</th>
+                     <th>Email</th>
+                     <th>Role</th>
+                     <th>Status</th>
+                     <th>Last Login</th>
+                     <th>Actions</th>
+                  </tr>
+               </thead>
+               <tbody id="users-tbody">
+                  <tr>
+                     <td colspan="6" style="text-align: center;">Loading data...</td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Add User Modal -->
+  <div id="add-user-modal" class="hidden" style="position: fixed; inset: 0; z-index: 1000; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.6); backdrop-filter: blur(6px);">
+    <div class="glass-panel glass-panel--elevated" style="max-width: 480px; width: 90%; padding: var(--space-8); position: relative;">
+      <button onclick="document.getElementById('add-user-modal').classList.add('hidden')" style="position: absolute; top: var(--space-4); right: var(--space-4); background: none; border: none; color: var(--on-surface-variant); font-size: 1.5rem; cursor: pointer;">✕</button>
+      <h2 class="card__title" style="margin-bottom: var(--space-6);">Create New User</h2>
+      <form id="add-user-form">
+        <div class="input-group">
+          <label class="input-label">Email *</label>
+          <input type="email" id="mu-email" class="input-field" required placeholder="user@clinic.com">
+        </div>
+        <div class="input-group">
+          <label class="input-label">Password *</label>
+          <input type="password" id="mu-password" class="input-field" required minlength="8" placeholder="Min 8 chars">
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4);">
+          <div class="input-group">
+            <label class="input-label">First Name *</label>
+            <input type="text" id="mu-fname" class="input-field" required>
+          </div>
+          <div class="input-group">
+            <label class="input-label">Last Name *</label>
+            <input type="text" id="mu-lname" class="input-field" required>
+          </div>
+        </div>
+        <div class="input-group">
+          <label class="input-label">Role *</label>
+          <select id="mu-role" class="input-field" required onchange="document.getElementById('mu-spec-group').style.display = this.value === 'Doctor' ? 'block' : 'none';">
+            <option value="Doctor">Doctor</option>
+            <option value="Nurse">Nurse</option>
+            <option value="Admin">Admin</option>
+          </select>
+        </div>
+        <div class="input-group" id="mu-spec-group">
+          <label class="input-label">Specialization</label>
+          <select id="mu-specialization" class="input-field">
+            <option value="">Loading...</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label class="input-label">Phone</label>
+          <input type="tel" id="mu-phone" class="input-field" placeholder="+20 123 456 7890">
+        </div>
+        <div class="input-group">
+          <label class="input-label">License Number</label>
+          <input type="text" id="mu-license" class="input-field" placeholder="LIC-0000">
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: var(--space-4);">Create User</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/admin/users.js"></script>
+  <script src="/js/admin/users-modal.js"></script>
+</body>
+</html>

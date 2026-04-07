@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Schedule Management — Admin Portal</title>
+  <link rel="stylesheet" href="/css/index.css">
+  <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+</head>
+<body>
+
+  <!-- ════════════════ NAVIGATION ════════════════ -->
+  <nav class="nav" id="main-nav">
+    <div class="nav__logo">
+      <img src="/assets/logo.svg" alt="CMS Logo" id="nav-logo">
+      <span class="nav__logo-text">CMS</span>
+    </div>
+    <div class="nav__links">
+      <span class="badge" style="background: var(--warning); color: var(--on-surface);">System Admin</span>
+    </div>
+    <div class="nav__actions" id="nav-actions"></div>
+  </nav>
+
+  <!-- ════════════════ DASHBOARD LAYOUT ════════════════ -->
+  <div class="dashboard">
+    <aside class="sidebar">
+      <div style="padding: var(--space-4) 0 var(--space-8);">
+        <div style="font-family: var(--font-label); font-size: var(--label-md); color: var(--outline); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: var(--space-4);">Admin Console</div>
+        <a href="/pages/admin/dashboard.html" class="sidebar__link">⚙️ System Health</a>
+        <a href="/pages/admin/users.html" class="sidebar__link">👥 User Management</a>
+        <a href="/pages/admin/schedules.html" class="sidebar__link active">📅 Schedule Management</a>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <div style="margin-bottom: var(--space-8);">
+        <h1 class="section__title" style="margin-bottom: var(--space-2);">Doctor Schedule Management</h1>
+        <p class="section__subtitle">View and manage doctor availability slots across the week.</p>
+      </div>
+
+      <!-- Doctor Selector -->
+      <div class="glass-panel" style="margin-bottom: var(--space-8);">
+        <div style="display: flex; gap: var(--space-4); align-items: flex-end;">
+          <div class="input-group" style="flex: 1; margin: 0;">
+            <label class="input-label">Select Doctor</label>
+            <select id="sched-doctor" class="input-field">
+              <option value="">— Choose a Doctor —</option>
+            </select>
+          </div>
+          <button class="btn btn-primary" onclick="loadAvailability()">Load Schedule</button>
+        </div>
+      </div>
+
+      <!-- Availability Table -->
+      <div class="glass-panel glass-panel--elevated animate-on-scroll">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-6);">
+          <h2 class="card__title" style="margin: 0;">Weekly Availability</h2>
+          <button class="btn btn-secondary btn-sm" onclick="document.getElementById('add-slot-modal').classList.remove('hidden')">+ Add Slot</button>
+        </div>
+        <div style="overflow-x: auto;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Day</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Active</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="avail-tbody">
+              <tr><td colspan="5" style="text-align: center;">Select a doctor to view schedule.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Add Slot Modal -->
+  <div id="add-slot-modal" class="hidden" style="position: fixed; inset: 0; z-index: 1000; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.6); backdrop-filter: blur(6px);">
+    <div class="glass-panel glass-panel--elevated" style="max-width: 420px; width: 90%; padding: var(--space-8); position: relative;">
+      <button onclick="document.getElementById('add-slot-modal').classList.add('hidden')" style="position: absolute; top: var(--space-4); right: var(--space-4); background: none; border: none; color: var(--on-surface-variant); font-size: 1.5rem; cursor: pointer;">✕</button>
+      <h2 class="card__title" style="margin-bottom: var(--space-6);">Add Availability Slot</h2>
+      <form id="add-slot-form">
+        <div class="input-group">
+          <label class="input-label">Day of Week *</label>
+          <select id="slot-day" class="input-field" required>
+            <option value="sun">Sunday</option>
+            <option value="mon">Monday</option>
+            <option value="tue">Tuesday</option>
+            <option value="wed">Wednesday</option>
+            <option value="thu">Thursday</option>
+            <option value="fri">Friday</option>
+            <option value="sat">Saturday</option>
+          </select>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4);">
+          <div class="input-group">
+            <label class="input-label">Start Time *</label>
+            <input type="time" id="slot-start" class="input-field" required style="color-scheme: dark;">
+          </div>
+          <div class="input-group">
+            <label class="input-label">End Time *</label>
+            <input type="time" id="slot-end" class="input-field" required style="color-scheme: dark;">
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: var(--space-4);">Create Slot</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/admin/schedules.js"></script>
+</body>
+</html>

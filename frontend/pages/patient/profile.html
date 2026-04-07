@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile Settings — Patient Portal</title>
+  <link rel="stylesheet" href="/css/index.css">
+  <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+</head>
+<body>
+
+  <!-- ════════════════ NAVIGATION ════════════════ -->
+  <nav class="nav" id="main-nav">
+    <div class="nav__logo">
+      <img src="/assets/logo.svg" alt="CMS Logo" id="nav-logo">
+      <span class="nav__logo-text">CMS</span>
+    </div>
+    <div class="nav__links">
+      <span class="badge badge--primary">Patient Portal</span>
+    </div>
+    <div class="nav__actions" id="nav-actions">
+      <!-- Populated by auth.js -->
+    </div>
+  </nav>
+
+  <!-- ════════════════ DASHBOARD LAYOUT ════════════════ -->
+  <div class="dashboard">
+    <aside class="sidebar">
+      <div style="padding: var(--space-4) 0 var(--space-8);">
+        <div style="font-family: var(--font-label); font-size: var(--label-md); color: var(--outline); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: var(--space-4);">Menu</div>
+        <a href="/pages/patient/dashboard.html" class="sidebar__link">📊 Dashboard</a>
+        <a href="/pages/patient/appointments.html" class="sidebar__link">📅 Appointments</a>
+        <a href="/pages/patient/records.html" class="sidebar__link">📋 Medical Records</a>
+        <a href="/pages/patient/profile.html" class="sidebar__link active">👤 Profile & Settings</a>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <div style="margin-bottom: var(--space-8);">
+        <h1 class="section__title" style="margin-bottom: var(--space-2);">Profile Settings</h1>
+        <p class="section__subtitle">Update your personal information and account security.</p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 2fr 1fr; gap: var(--space-8);">
+        <!-- Profile Form -->
+        <div class="glass-panel animate-on-scroll">
+          <h2 class="card__title" style="margin-bottom: var(--space-6);">Personal Information</h2>
+          <form id="profile-form">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4);">
+              <div class="input-group">
+                <label class="input-label">First Name</label>
+                <input type="text" id="fname" class="input-field" disabled>
+              </div>
+              <div class="input-group">
+                <label class="input-label">Last Name</label>
+                <input type="text" id="lname" class="input-field" disabled>
+              </div>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4);">
+              <div class="input-group">
+                <label class="input-label">Date of Birth</label>
+                <input type="date" id="dob" class="input-field" disabled>
+              </div>
+              <div class="input-group">
+                <label class="input-label">Gender</label>
+                <input type="text" id="gender" class="input-field" disabled>
+              </div>
+            </div>
+
+            <hr style="border: none; border-top: 1px solid rgba(68,70,78,0.2); margin: var(--space-6) 0;">
+
+            <div class="input-group">
+              <label class="input-label">Email Address (Login)</label>
+              <input type="email" id="email" class="input-field" disabled>
+            </div>
+
+            <div class="input-group">
+              <label class="input-label">Phone Number *</label>
+              <input type="tel" id="phone" class="input-field" required>
+            </div>
+
+            <div class="input-group">
+              <label class="input-label">Home Address *</label>
+              <input type="text" id="address" class="input-field" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary" id="btn-save-profile">Save Changes</button>
+          </form>
+        </div>
+
+        <!-- Security Form -->
+        <div class="glass-panel animate-on-scroll">
+          <h2 class="card__title" style="margin-bottom: var(--space-6);">Security</h2>
+          <form id="security-form">
+            <div class="input-group">
+              <label class="input-label">New Password</label>
+              <input type="password" id="new-pwd" class="input-field" required minlength="8">
+            </div>
+            <div class="input-group">
+              <label class="input-label">Confirm New Password</label>
+              <input type="password" id="confirm-pwd" class="input-field" required>
+            </div>
+            <button type="submit" class="btn btn-secondary" id="btn-save-security">Update Password</button>
+          </form>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/patient/profile.js"></script>
+</body>
+</html>

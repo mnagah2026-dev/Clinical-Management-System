@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CMS — About & Contact</title>
+  <meta name="description" content="Learn more about our clinical mission and connect with our support team.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="About — CMS Clinical Management System">
+  <meta property="og:description" content="Precision in every practice. Learn about our clinical mission and world-class infrastructure.">
+  <meta property="og:image" content="/assets/logo.svg">
+  <meta property="og:site_name" content="Clinical Management System">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="About — CMS">
+  <meta name="twitter:description" content="Learn about our clinical mission and connect with our support team.">
+  <link rel="stylesheet" href="/css/index.css">
+  <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+</head>
+<body>
+
+  <!-- ════════════════ NAVIGATION ════════════════ -->
+  <nav class="nav" id="main-nav">
+    <div class="nav__logo">
+      <img src="/assets/logo.svg" alt="CMS Logo" id="nav-logo">
+      <span class="nav__logo-text">CMS</span>
+    </div>
+    <div class="nav__links">
+      <a href="/pages/index.html" class="nav__link" id="nav-home">Home</a>
+      <a href="/pages/doctors.html" class="nav__link" id="nav-doctors">Doctors Directory</a>
+      <a href="/pages/about.html" class="nav__link active" id="nav-about">About</a>
+      <a href="#contact" class="nav__link" id="nav-contact">Contact Us</a>
+    </div>
+    <div class="nav__actions" id="nav-actions">
+      <a href="/pages/login.html" class="nav__link" id="nav-get-started">Get Started</a>
+      <a href="/pages/register.html" class="btn btn-primary btn-sm" id="nav-register">Register</a>
+    </div>
+  </nav>
+
+  <!-- ════════════════ HERO / ABOUT ════════════════ -->
+  <section class="section" style="padding-top: calc(var(--nav-height) + var(--space-20));">
+    <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+      <div class="section__eyebrow">Our Mission</div>
+      <h1 class="section__title" style="font-size: var(--display-md);">Precision in Every Practice</h1>
+      <p class="section__subtitle" style="margin: 0 auto var(--space-12);">
+        At the Clinical Management System, our vision is a seamless integration of world-class medical expertise with cutting-edge digital infrastructure. We believe that efficiency in clinical environments saves lives. By combining secure data architecture with intuitive interfaces, we empower doctors to focus on healing, and patients to take control of their health journey.
+      </p>
+    </div>
+
+    <div class="stats__grid" style="margin-top: var(--space-8);">
+      <div class="stats__item animate-on-scroll">
+        <div class="stats__number">1M+</div>
+        <div class="stats__label">Records Managed</div>
+      </div>
+      <div class="stats__item animate-on-scroll">
+        <div class="stats__number">100%</div>
+        <div class="stats__label">HIPAA Compliant</div>
+      </div>
+      <div class="stats__item animate-on-scroll">
+        <div class="stats__number">0.1s</div>
+        <div class="stats__label">System Latency</div>
+      </div>
+      <div class="stats__item animate-on-scroll">
+        <div class="stats__number">24/7</div>
+        <div class="stats__label">System Monitoring</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════ CONTACT MODULE ════════════════ -->
+  <section id="contact" class="section" style="background: var(--surface-container-low);">
+    <div class="section__header" style="text-align: center; justify-content: center; flex-direction: column;">
+      <div class="section__eyebrow">Connect</div>
+      <h2 class="section__title">Contact Our Office</h2>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-12); max-width: 1000px; margin: 0 auto;">
+      <!-- Details -->
+      <div class="glass-panel" style="padding: var(--space-8);">
+        <h3 class="card__title">Headquarters</h3>
+        <div style="margin-bottom: var(--space-6); color: var(--on-surface-variant); font-size: var(--body-md); line-height: 1.8;">
+          1200 Clinical Way, Suite 400<br>
+          Medical District 7, Metropolis<br>
+          Zip: 90210
+        </div>
+        
+        <div style="display: flex; flex-direction: column; gap: var(--space-4);">
+          <div style="display: flex; gap: var(--space-3); align-items: start;">
+            <span style="color: var(--primary);">📞</span>
+            <div>
+              <div style="font-family: var(--font-label); font-weight: 600; text-transform: uppercase; font-size: var(--label-sm); color: var(--outline);">Emergency Hotline</div>
+              <div style="font-size: var(--body-md);">+1 (800) CMS-CARE</div>
+            </div>
+          </div>
+          <div style="display: flex; gap: var(--space-3); align-items: start;">
+            <span style="color: var(--primary);">✉️</span>
+            <div>
+              <div style="font-family: var(--font-label); font-weight: 600; text-transform: uppercase; font-size: var(--label-sm); color: var(--outline);">General Inquiry</div>
+              <div style="font-size: var(--body-md);">contact@cms.precise.com</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <div class="glass-panel glass-panel--elevated">
+        <form id="contact-form" onsubmit="event.preventDefault(); Toast.success('Message sent! Our team will reply within 24 hours.'); this.reset();">
+          <div class="input-group">
+            <label class="input-label">Full Name</label>
+            <input type="text" class="input-field" required placeholder="Mohammed Ahmed">
+          </div>
+          <div class="input-group">
+            <label class="input-label">Email Address</label>
+            <input type="email" class="input-field" required placeholder="mohammed.ahmed@example.com">
+          </div>
+          <div class="input-group">
+            <label class="input-label">Message</label>
+            <textarea class="input-field" required placeholder="How can we help you?" style="min-height: 120px; resize: vertical;"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Interactive Map (Plan 5 — Egypt, Cairo) -->
+    <div style="max-width: 1000px; margin: var(--space-12) auto 0;">
+      <div class="glass-panel" style="padding: var(--space-6);">
+        <h3 class="card__title" style="margin-bottom: var(--space-4);">📍 Our Location — Cairo, Egypt</h3>
+        <div style="border-radius: var(--radius-xl); overflow: hidden; filter: brightness(0.85) contrast(1.1);">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d55251.37609539498!2d31.223445!3d30.044420!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x145840c07a6e5ebf%3A0x4c44c9b35fad0c5!2sCairo%2C%20Egypt!5e0!3m2!1sen!2seg!4v1710000000000"
+            width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="CMS Location Map — Cairo, Egypt">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════ FOOTER ════════════════ -->
+  <footer class="footer" id="main-footer">
+    <div class="footer__grid">
+      <div>
+        <div class="footer__brand-name">CMS</div>
+        <p class="footer__brand-desc">Elevating medical standards through high-performance software and precision clinical management tools.</p>
+      </div>
+      <div>
+        <div class="footer__col-title">Quick Links</div>
+        <a href="/pages/login.html" class="footer__link">Patient Portal</a>
+        <a href="/pages/doctors.html" class="footer__link">Find a Doctor</a>
+        <a href="#contact" class="footer__link">Emergency Services</a>
+        <a href="#" class="footer__link">Clinical Trials</a>
+      </div>
+      <div>
+        <div class="footer__col-title">Official Hours</div>
+        <span class="footer__link">Emergency: 24/7</span>
+        <span class="footer__link">OPD: 08:00 – 20:00</span>
+        <span class="footer__link">Lab: 06:00 – 22:00</span>
+        <span class="footer__link">Pharmacy: 24/7</span>
+      </div>
+      <div>
+        <div class="footer__col-title">Contact Info</div>
+        <span class="footer__link">📍 Medical Center, District 7</span>
+        <span class="footer__link">📞 +1 (800) CMS-CARE</span>
+        <span class="footer__link">✉️ contact@cms.precise.com</span>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span class="footer__copyright">&copy; 2025 Clinical Management System. Precision in Care.</span>
+      <div class="footer__legal">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diagnosis & Rx — Doctor Portal</title>
+  <link rel="stylesheet" href="/css/index.css">
+  <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+</head>
+<body>
+
+  <!-- ════════════════ NAVIGATION ════════════════ -->
+  <nav class="nav" id="main-nav">
+    <div class="nav__logo">
+      <img src="/assets/logo.svg" alt="CMS Logo" id="nav-logo">
+      <span class="nav__logo-text">CMS</span>
+    </div>
+    <div class="nav__links">
+      <span class="badge badge--secondary">Doctor Portal</span>
+    </div>
+    <div class="nav__actions" id="nav-actions">
+      <!-- Populated by auth.js -->
+    </div>
+  </nav>
+
+  <!-- ════════════════ DASHBOARD LAYOUT ════════════════ -->
+  <div class="dashboard">
+    <aside class="sidebar">
+      <div style="padding: var(--space-4) 0 var(--space-8);">
+        <div style="font-family: var(--font-label); font-size: var(--label-md); color: var(--outline); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: var(--space-4);">Menu</div>
+        <a href="/pages/doctor/dashboard.html" class="sidebar__link">📊 Dashboard</a>
+        <a href="/pages/doctor/appointments.html" class="sidebar__link">📅 Appointments</a>
+        <a href="/pages/doctor/records.html" class="sidebar__link">📋 Patient Records</a>
+        <a href="/pages/doctor/diagnosis.html" class="sidebar__link active">🩺 Diagnosis & Rx</a>
+        <a href="/pages/doctor/profile.html" class="sidebar__link">👤 Profile & Settings</a>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <div style="margin-bottom: var(--space-8); display: flex; justify-content: space-between; align-items: flex-end;">
+        <div>
+          <h1 class="section__title" style="margin-bottom: var(--space-2);">Diagnosis & Prescriptions</h1>
+          <p class="section__subtitle">Record clinical findings and analyze pharmaceutical interactions.</p>
+        </div>
+      </div>
+
+      <div id="no-patient-alert" class="glass-panel" style="display: none; border-left: 4px solid var(--warning); margin-bottom: var(--space-8);">
+         <h3 style="color: var(--warning); margin-bottom: var(--space-2);">No Active Patient Selected</h3>
+         <p style="color: var(--on-surface-variant); margin-bottom: var(--space-4);">Please select a patient from the records or dashboard to begin a consultation.</p>
+         <a href="/pages/doctor/records.html" class="btn btn-secondary">Go to Patient Records</a>
+      </div>
+
+      <div id="consultation-form" class="glass-panel glass-panel--elevated animate-on-scroll">
+        <form id="diagnosis-form">
+          <!-- Header info -->
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(68,70,78,0.3); padding-bottom: var(--space-4); margin-bottom: var(--space-6);">
+             <div>
+                <div style="font-family: var(--font-label); color: var(--outline); text-transform: uppercase; font-size: var(--label-sm); letter-spacing: 0.1em;">Target Patient</div>
+                <div id="active-patient-name" style="font-size: var(--title-lg); font-weight: 700; color: var(--primary);">Loading...</div>
+             </div>
+             <div style="text-align: right;">
+                <div style="font-family: var(--font-label); color: var(--outline); text-transform: uppercase; font-size: var(--label-sm); letter-spacing: 0.1em;">Appointment ID</div>
+                <div id="active-appt-id" style="font-size: var(--body-md); font-family: var(--font-label);">--</div>
+             </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 2fr 1fr; gap: var(--space-6); margin-bottom: var(--space-6);">
+             <div class="input-group" style="margin: 0;">
+                <label class="input-label">Primary Diagnosis *</label>
+                <input type="text" id="diag-title" class="input-field" required placeholder="E.g., Acute Bronchitis">
+             </div>
+             <div class="input-group" style="margin: 0;">
+                <label class="input-label">Severity *</label>
+                <select id="diag-severity" class="input-field" required>
+                   <option value="1">1 — High Severity (Critical)</option>
+                   <option value="2">2 — Moderate Severity</option>
+                   <option value="3" selected>3 — Low Severity (Mild)</option>
+                </select>
+             </div>
+          </div>
+          <div class="input-group" style="margin-bottom: var(--space-8);">
+             <label class="input-label">Clinical Notes / Treatment Plan</label>
+             <textarea id="diag-notes" class="input-field" placeholder="Patient symptoms, specific recommendations..." style="height: 100px; resize: vertical;"></textarea>
+          </div>
+
+          <!-- Prescriptions Builder -->
+          <h2 class="card__title" style="margin-bottom: var(--space-4);">Prescription Regimen</h2>
+          <div style="background: var(--surface-container-highest); padding: var(--space-4); border-radius: var(--radius-md); border: 1px solid rgba(151,169,255,0.1); margin-bottom: var(--space-6);">
+             <div style="display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: var(--space-3); align-items: end;">
+                <div class="input-group" style="margin: 0;">
+                   <label class="input-label">Drug Name</label>
+                   <input type="text" id="drug-name" class="input-field" placeholder="e.g., Amoxicillin">
+                </div>
+                <div class="input-group" style="margin: 0;">
+                   <label class="input-label">Dosage</label>
+                   <input type="text" id="drug-dosage" class="input-field" placeholder="e.g., 500mg">
+                </div>
+                <div class="input-group" style="margin: 0;">
+                   <label class="input-label">Frequency</label>
+                   <input type="text" id="drug-freq" class="input-field" placeholder="Twice daily">
+                </div>
+                <button type="button" id="btn-add-drug" class="btn btn-secondary" style="height: calc(100% - 24px);">Add Drug</button>
+             </div>
+          </div>
+
+          <!-- Active Prescriptions List -->
+          <div id="rx-list" style="display: flex; flex-direction: column; gap: var(--space-2); margin-bottom: var(--space-8);">
+             <div style="text-align: center; color: var(--on-surface-variant); font-size: var(--body-sm); padding: var(--space-4);">No drugs added yet.</div>
+          </div>
+
+          <!-- Interaction Warnings -->
+          <div id="interaction-warnings" style="margin-bottom: var(--space-8);"></div>
+
+          <!-- Form Actions -->
+          <div style="display: flex; gap: var(--space-4); justify-content: flex-end; border-top: 1px solid rgba(68,70,78,0.3); padding-top: var(--space-6);">
+             <button type="button" id="btn-analyze" class="btn btn-secondary">Analyze Interactions</button>
+             <button type="submit" id="btn-submit" class="btn btn-primary">Finalize Diagnosis</button>
+          </div>
+        </form>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/doctor/diagnosis.js"></script>
+</body>
+</html>

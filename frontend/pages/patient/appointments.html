@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Appointments — Patient Portal</title>
+  <link rel="stylesheet" href="/css/index.css">
+  <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+</head>
+<body>
+
+  <!-- ════════════════ NAVIGATION ════════════════ -->
+  <nav class="nav" id="main-nav">
+    <div class="nav__logo">
+      <img src="/assets/logo.svg" alt="CMS Logo" id="nav-logo">
+      <span class="nav__logo-text">CMS</span>
+    </div>
+    <div class="nav__links">
+      <span class="badge badge--primary">Patient Portal</span>
+    </div>
+    <div class="nav__actions" id="nav-actions">
+      <!-- Populated by auth.js -->
+    </div>
+  </nav>
+
+  <!-- ════════════════ DASHBOARD LAYOUT ════════════════ -->
+  <div class="dashboard">
+    <aside class="sidebar">
+      <div style="padding: var(--space-4) 0 var(--space-8);">
+        <div style="font-family: var(--font-label); font-size: var(--label-md); color: var(--outline); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: var(--space-4);">Menu</div>
+        <a href="/pages/patient/dashboard.html" class="sidebar__link">📊 Dashboard</a>
+        <a href="/pages/patient/appointments.html" class="sidebar__link active">📅 Appointments</a>
+        <a href="/pages/patient/records.html" class="sidebar__link">📋 Medical Records</a>
+        <a href="/pages/patient/profile.html" class="sidebar__link">👤 Profile & Settings</a>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: var(--space-8);">
+        <div>
+          <h1 class="section__title" style="margin-bottom: var(--space-2);">Appointments</h1>
+          <p class="section__subtitle">Manage your scheduled clinical visits or book a new one.</p>
+        </div>
+        <button class="btn btn-primary" id="btn-open-booking">Book New Appointment</button>
+      </div>
+
+      <!-- Booking Section (Hidden by default) -->
+      <div id="booking-section" class="glass-panel glass-panel--elevated animate-on-scroll hidden" style="margin-bottom: var(--space-12);">
+        <div style="display: flex; justify-content: space-between; margin-bottom: var(--space-6);">
+          <h2 class="card__title" style="margin: 0;">Book New Appointment</h2>
+          <button class="btn btn-ghost btn-sm" id="btn-close-booking">Cancel</button>
+        </div>
+        
+        <form id="booking-form">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6);">
+            <div class="input-group">
+              <label class="input-label">Select Specialist</label>
+              <select id="doctor-select" class="input-field" required>
+                <option value="">Choose a doctor...</option>
+                <!-- Populated via JS -->
+              </select>
+            </div>
+            <div class="input-group">
+              <label class="input-label">Select Date</label>
+              <input type="date" id="date-select" class="input-field" required disabled>
+            </div>
+          </div>
+          
+          <div id="slots-container" class="input-group hidden" style="margin-top: var(--space-4);">
+            <label class="input-label">Available Time Slots</label>
+            <div id="time-slots" style="display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-2);">
+              <!-- Populated via JS -->
+            </div>
+            <input type="hidden" id="selected-time" required>
+          </div>
+
+          <div class="input-group" style="margin-top: var(--space-4);">
+             <label class="input-label">Clinical Notes (Optional)</label>
+             <textarea id="booking-notes" class="input-field" placeholder="Briefly describe your symptoms or reason for visit..."></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary" id="btn-submit-booking" style="width: 100%; margin-top: var(--space-4);" disabled>Confirm Booking</button>
+        </form>
+      </div>
+
+      <!-- Appointments List Table -->
+      <div class="glass-panel animate-on-scroll">
+         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-6);">
+           <h2 class="card__title" style="margin: 0;">My Appointments</h2>
+           <select id="status-filter" class="input-field" style="width: auto; padding: var(--space-2) var(--space-4);">
+             <option value="">All Statuses</option>
+             <option value="scheduled">Scheduled</option>
+             <option value="completed">Completed</option>
+             <option value="cancelled">Cancelled</option>
+           </select>
+         </div>
+         <div style="overflow-x: auto;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Date & Time</th>
+                <th>Specialist</th>
+                <th>Status</th>
+                <th>Notes</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="appts-tbody">
+              <tr>
+                <td colspan="5" style="text-align: center;">Loading data...</td>
+              </tr>
+            </tbody>
+          </table>
+         </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/patient/appointments.js"></script>
+</body>
+</html>
