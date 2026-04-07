@@ -145,7 +145,7 @@ CMS/
 ### خطوات التشغيل
 1.  **تحميل المشروع:**
     ```bash
-    git clone https://github.com/your-username/CMS.git
+    git clone https://github.com/mnagah2026-dev/Clinical-Management-System.git
     cd CMS
     ```
 
@@ -164,19 +164,19 @@ CMS/
 4.  **إعداد المتغيرات البيئية:**
     قم بإنشاء ملف `.env` داخل مجلد `backend` وأضف فيه بيانات قاعدة البيانات لتتطابق مع خادم PostgreSQL:
     ```env
-   # Copy this file to .env and fill in your values
-   JWT_SECRET_KEY=change-me-to-a-random-string
-   JWT_ALGORITHM=HS256
-   ACCESS_TOKEN_EXPIRE_MINUTES=60
+    # Copy this file to .env and fill in your values
+    JWT_SECRET_KEY=change-me-to-a-random-string
+    JWT_ALGORITHM=HS256
+    ACCESS_TOKEN_EXPIRE_MINUTES=60
 
-   POSTGRES_USER=postgres
-   POSTGRES_PASSWORD=your-database-password
-   POSTGRES_SERVER=localhost
-   POSTGRES_PORT=5432
-   POSTGRES_DB=cms_db
+    POSTGRES_USER=postgres
+    POSTGRES_PASSWORD=your-database-password
+    POSTGRES_SERVER=localhost
+    POSTGRES_PORT=5432
+    POSTGRES_DB=cms_db
 
-   REDIS_URL=redis://localhost:6379/
-   CORS_ORIGINS=["*"]
+    REDIS_URL=redis://localhost:6379/
+    CORS_ORIGINS=["*"]
     ```
 
 5.  **تشغيل الخادم:**
