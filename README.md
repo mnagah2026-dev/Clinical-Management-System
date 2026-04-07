@@ -145,7 +145,7 @@ CMS/
 ### خطوات التشغيل
 1.  **تحميل المشروع:**
     ```bash
-    git clone https://github.com/your-username/CMS.git
+    git clone [https://github.com/your-username/CMS.git](https://github.com/mnagah2026-dev/Clinical-Management-System.git)
     cd CMS
     ```
 
