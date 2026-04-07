@@ -1,0 +1,35 @@
+id,Generic_Name,Pharmacologic_category,WHO_AWaRe
+10_1,Amikacin,Aminoglycosides,Access
+10_2,Gentamicin,Aminoglycosides,Access
+10_3,Neomycin,Aminoglycosides,Watch
+10_4,Streptomycin,Aminoglycosides,Watch
+10_5,Tobramycin,Aminoglycosides,Watch
+10_6,Albendazole,Anthelmintic,
+10_7,Diethylcarbamazine,Anthelmintic,
+10_8,Ivermectin,Anthelmintic,
+10_9,Levamisole,Anthelmintic,
+10_10,Mebendazole,Anthelmintic,
+10_11,Niclosamide,Anthelmintic,
+10_12,Praziquantel,Anthelmintic,
+10_13,Pyrantel,Anthelmintic,
+10_14,Triclabendazole,Anthelmintic,
+10_15,Amphotericin B,Antifungal,
+10_16,Anidulafungin,Antifungal,
+10_17,Caspofungin,Antifungal,
+10_18,Flubendazole,Antifungal,
+10_19,Fluconazole,Antifungal,
+10_20,Griseofulvin,Antifungal,
+10_21,Itraconazole,Antifungal,
+10_22,Ketoconazole,Antifungal,
+10_23,Micafungin,Antifungal,
+10_24,Nystatin,Antifungal,
+10_25,Voriconazole,Antifungal,
+10_26,Posaconazole,Antifungal,
+10_27,Artemether and lumefantrine,Antimalarial agents,
+10_28,Artesunate,Antimalarial agents,
+10_29,Artesunate and amodiaquine,Antimalarial agents,
+10_30,Chloroquine,Antimalarial agents,
+10_31,Hydroxychloroquine,Antimalarial agents,
+10_32,Mefloquine,Antimalarial agents,
+10_33,Pyrimethamine,Antimalarial agents,
+10_34,Sulfadoxine and Pyrimethamine,Antimalarial agents,

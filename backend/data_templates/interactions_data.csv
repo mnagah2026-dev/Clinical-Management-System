@@ -1,0 +1,71 @@
+id,drug_a,drug_b,severity,description,management
+11_1,10_1,10_2,Moderate,"GENERALLY AVOID: Use of more than one aminoglycoside concurrently or sequentially may increase 
+the risk of nephrotoxicity and ototoxicity. The risk is greatest in patients with impaired renal 
+function, those receiving high doses for prolonged periods of time, elderly patients, and dehydrated 
+patients. Ototoxicity may occur without renal toxicity. Oral neomycin undergoes systemic absorption 
+and has also been associated with nephrotoxicity and ototoxicity.","The use of more than one aminoglycoside should be avoided. Patients receiving aminoglycosides 
+should be closely monitored for development of toxicity, including renal function tests and serial, 
+vestibular, and audiometric tests. Ototoxicity may be permanent and may not be apparent until long 
+after therapy has been discontinued. The onset of auditory toxicity may be asymptomatic or may 
+manifest with early symptoms such as feelings of fullness in the ear, high tone hearing loss, or 
+tinnitus. Signs of vestibulotoxicity include ataxia, tinnitus, and vertigo."
+11_2,10_1,10_3,Moderate,"GENERALLY AVOID: Use of more than one aminoglycoside concurrently or sequentially may increase the risk 
+of nephrotoxicity and ototoxicity. The risk is greatest in patients with impaired renal function, those 
+receiving high doses for prolonged periods of time, elderly patients, and dehydrated patients. Ototoxicity 
+may occur without renal toxicity. Oral neomycin undergoes systemic absorption and has also been associated 
+with nephrotoxicity and ototoxicity.","The use of more than one aminoglycoside should be avoided. Patients receiving aminoglycosides 
+should be closely monitored for development of toxicity, including renal function tests and serial, 
+vestibular, and audiometric tests. Ototoxicity may be permanent and may not be apparent until long 
+after therapy has been discontinued. The onset of auditory toxicity may be asymptomatic or may manifest 
+with early symptoms such as feelings of fullness in the ear, high tone hearing loss, or tinnitus. 
+Signs of vestibulotoxicity include ataxia, tinnitus, and vertigo."
+11_3,10_1,10_4,Moderate,"GENERALLY AVOID: Use of more than one aminoglycoside concurrently or sequentially may increase the risk of 
+nephrotoxicity and ototoxicity. The risk is greatest in patients with impaired renal function, those receiving 
+high doses for prolonged periods of time, elderly patients, and dehydrated patients. Ototoxicity may occur 
+without renal toxicity. Oral neomycin undergoes systemic absorption and has also been associated 
+with nephrotoxicity and ototoxicity.","The use of more than one aminoglycoside should be avoided. Patients receiving aminoglycosides should be closely 
+monitored for development of toxicity, including renal function tests and serial, vestibular, and audiometric tests.
+ Ototoxicity may be permanent and may not be apparent until long after therapy has been discontinued. The onset of 
+auditory toxicity may be asymptomatic or may manifest with early symptoms such as feelings of fullness in the ear, 
+high tone hearing loss, or tinnitus. Signs of vestibulotoxicity include ataxia, tinnitus, and vertigo."
+11_4,10_1,10_5,Moderate,"GENERALLY AVOID: Use of more than one aminoglycoside concurrently or sequentially may increase the risk of 
+nephrotoxicity and ototoxicity. The risk is greatest in patients with impaired renal function, those receiving 
+high doses for prolonged periods of time, elderly patients, and dehydrated patients. Ototoxicity may occur without 
+renal toxicity. Oral neomycin undergoes systemic absorption and has also been associated with nephrotoxicity and ototoxicity.","The use of more than one aminoglycoside should be avoided. Patients receiving aminoglycosides should be closely 
+monitored for development of toxicity, including renal function tests and serial, vestibular, and audiometric tests. 
+Ototoxicity may be permanent and may not be apparent until long after therapy has been discontinued. The onset of 
+auditory toxicity may be asymptomatic or may manifest with early symptoms such as feelings of fullness in the ear, 
+high tone hearing loss, or tinnitus. Signs of vestibulotoxicity include ataxia, tinnitus, and vertigo."
+11_5,10_1,10_15,Moderate,MONITOR: The potential nephrotoxicity associated with amphotericin B and aminoglycosides may be additive.,"Just before the start and just before the end of each amphotericin infusion, hydration of 
+the patient with 500 mL of normal saline may be helpful. The patient's renal function 
+should be monitored frequently during therapy."
+11_6,10_2,10_3,Moderate,"GENERALLY AVOID: Use of more than one aminoglycoside concurrently or sequentially may increase the risk 
+of nephrotoxicity and ototoxicity. The risk is greatest in patients with impaired renal function, those 
+receiving high doses for prolonged periods of time, elderly patients, and dehydrated patients. Ototoxicity 
+may occur without renal toxicity. Oral neomycin undergoes systemic absorption and has also been associated 
+with nephrotoxicity and ototoxicity.","The use of more than one aminoglycoside should be avoided. Patients receiving aminoglycosides should be closely 
+monitored for development of toxicity, including renal function tests and serial, vestibular, and audiometric tests. 
+Ototoxicity may be permanent and may not be apparent until long after therapy has been discontinued. The onset of 
+auditory toxicity may be asymptomatic or may manifest with early symptoms such as feelings of fullness in the ear, 
+high tone hearing loss, or tinnitus. Signs of vestibulotoxicity include ataxia, tinnitus, and vertigo."
+11_7,10_2,10_4,Moderate,"GENERALLY AVOID: Use of more than one aminoglycoside concurrently or sequentially may increase the risk of 
+nephrotoxicity and ototoxicity. The risk is greatest in patients with impaired renal function, those receiving 
+high doses for prolonged periods of time, elderly patients, and dehydrated patients. Ototoxicity may occur 
+without renal toxicity. Oral neomycin undergoes systemic absorption and has also been associated 
+with nephrotoxicity and ototoxicity.","The use of more than one aminoglycoside should be avoided. Patients receiving aminoglycosides should be closely 
+monitored for development of toxicity, including renal function tests and serial, vestibular, and audiometric tests. 
+Ototoxicity may be permanent and may not be apparent until long after therapy has been discontinued. The onset of 
+auditory toxicity may be asymptomatic or may manifest with early symptoms such as feelings of fullness in the ear, 
+high tone hearing loss, or tinnitus. Signs of vestibulotoxicity include ataxia, tinnitus, and vertigo."
+11_8,10_2,10_5,Moderate,"GENERALLY AVOID: Use of more than one aminoglycoside concurrently or sequentially may increase the risk 
+of nephrotoxicity and ototoxicity. The risk is greatest in patients with impaired renal function, those 
+receiving high doses for prolonged periods of time, elderly patients, and dehydrated patients. Ototoxicity 
+may occur without renal toxicity. Oral neomycin undergoes systemic absorption and has also been associated 
+with nephrotoxicity and ototoxicity.","The use of more than one aminoglycoside should be avoided. Patients receiving aminoglycosides should be closely 
+monitored for development of toxicity, including renal function tests and serial, vestibular, and audiometric tests. 
+Ototoxicity may be permanent and may not be apparent until long after therapy has been discontinued. The onset of 
+auditory toxicity may be asymptomatic or may manifest with early symptoms such as feelings of fullness in the ear, 
+high tone hearing loss, or tinnitus. Signs of vestibulotoxicity include ataxia, tinnitus, and vertigo."
+11_9,10_2,10_15,Moderate,MONITOR: The potential nephrotoxicity associated with amphotericin B and aminoglycosides may be additive.,"Just before the start and just before the end of each amphotericin infusion, hydration of 
+the patient with 500 mL of normal saline may be helpful. The patient's renal function 
+should be monitored frequently during therapy."

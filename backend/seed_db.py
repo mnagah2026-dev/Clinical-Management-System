@@ -5,9 +5,9 @@ from app.core.database import engine, Base
 from app.core.security import get_password_hash
 import app.models
 
-# Use an environment variable for the CSV directory, or default to a local 'data/csv' folder.
+# Use an environment variable for the CSV directory, or default to a local 'data_templates' folder.
 # Set CSV_DIR=C:\path\to\your\csv\folder before running if the files are external.
-CSV_DIR = os.getenv("CSV_DIR", os.path.join(os.path.dirname(__file__), "..", "data", "csv"))
+CSV_DIR = os.getenv("CSV_DIR", os.path.join(os.path.dirname(__file__), "data_templates"))
 
 TABLE_FILES = [
     ("users", "users_data.csv"),

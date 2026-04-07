@@ -1,0 +1,73 @@
+id,drug_id,medical_records_id,treatment,dosage,created_at,updated_at
+9_1,10_11,8_1,Niclosamide,Take 5ml once daily when needed,2024-06-26 11:03:50,2024-06-26 11:03:50
+9_2,10_22,8_1,Ketoconazole,Apply twice daily on affected area,2024-06-26 11:03:29,2024-06-26 11:03:29
+9_3,10_27,8_2,Artemether and lumefantrine,Apply three times daily on affected area,2024-09-01 17:35:30,2024-09-01 17:35:30
+9_4,10_6,8_2,Albendazole,Take 5ml twice daily when needed,2024-09-01 17:35:28,2024-09-01 17:35:28
+9_5,10_33,8_2,Pyrimethamine,500mg three times daily after meals,2024-09-01 17:35:50,2024-09-01 17:35:50
+9_6,10_7,8_3,Diethylcarbamazine,Apply at bedtime on affected area,2024-09-29 13:34:00,2024-09-29 13:34:00
+9_7,10_26,8_3,Posaconazole,Apply every 12 hours on affected area,2024-09-29 13:33:12,2024-09-29 13:33:12
+9_8,10_21,8_4,Itraconazole,Apply every 8 hours on affected area,2024-07-05 17:31:52,2024-07-05 17:31:52
+9_9,10_6,8_4,Albendazole,1 tablet at bedtime for 9 days,2024-07-05 17:31:50,2024-07-05 17:31:50
+9_10,10_30,8_5,Chloroquine,1 tablet every 12 hours for 8 days,2024-05-28 17:35:32,2024-05-28 17:35:32
+9_11,10_5,8_7,Tobramycin,500mg once daily after meals,2024-01-22 09:23:30,2024-01-22 09:23:30
+9_12,10_13,8_7,Pyrantel,Apply at bedtime on affected area,2024-01-22 09:23:32,2024-01-22 09:23:32
+9_13,10_31,8_8,Hydroxychloroquine,250mg twice daily before breakfast,2024-05-21 22:45:22,2024-05-21 22:45:22
+9_14,10_30,8_8,Chloroquine,1 tablet at bedtime for 4 days,2024-05-21 22:45:48,2024-05-21 22:45:48
+9_15,10_25,8_9,Voriconazole,Apply twice daily on affected area,2024-11-25 17:12:49,2024-11-25 17:12:49
+9_16,10_11,8_10,Niclosamide,250mg twice daily before breakfast,2024-05-07 11:04:20,2024-05-07 11:04:20
+9_17,10_2,8_10,Gentamicin,Take 5ml every 12 hours when needed,2024-05-07 11:04:35,2024-05-07 11:04:35
+9_18,10_14,8_11,Triclabendazole,500mg every 12 hours after meals,2024-09-01 11:55:59,2024-09-01 11:55:59
+9_19,10_23,8_11,Micafungin,Take 5ml at bedtime when needed,2024-09-01 11:56:00,2024-09-01 11:56:00
+9_20,10_1,8_11,Amikacin,1 tablet once daily for 13 days,2024-09-01 11:55:51,2024-09-01 11:55:51
+9_21,10_26,8_12,Posaconazole,500mg every 12 hours after meals,2024-03-25 10:01:23,2024-03-25 10:01:23
+9_22,10_33,8_13,Pyrimethamine,1 tablet at bedtime for 8 days,2024-02-02 09:51:22,2024-02-02 09:51:22
+9_23,10_24,8_13,Nystatin,250mg every 8 hours before breakfast,2024-02-02 09:51:49,2024-02-02 09:51:49
+9_24,10_30,8_14,Chloroquine,500mg twice daily after meals,2024-01-23 10:23:27,2024-01-23 10:23:27
+9_25,10_26,8_14,Posaconazole,250mg every 8 hours before breakfast,2024-01-23 10:23:42,2024-01-23 10:23:42
+9_26,10_3,8_15,Neomycin,Apply at bedtime on affected area,2024-06-13 20:34:34,2024-06-13 20:34:34
+9_27,10_26,8_17,Posaconazole,250mg at bedtime before breakfast,2024-10-17 18:04:53,2024-10-17 18:04:53
+9_28,10_8,8_18,Ivermectin,250mg once daily before breakfast,2024-04-14 22:03:48,2024-04-14 22:03:48
+9_29,10_19,8_19,Fluconazole,1 tablet three times daily for 13 days,2024-01-01 12:21:32,2024-01-01 12:21:32
+9_30,10_31,8_20,Hydroxychloroquine,250mg every 12 hours before breakfast,2024-10-24 11:14:35,2024-10-24 11:14:35
+9_31,10_33,8_20,Pyrimethamine,Apply every 12 hours on affected area,2024-10-24 11:14:22,2024-10-24 11:14:22
+9_32,10_28,8_20,Artesunate,Apply every 8 hours on affected area,2024-10-24 11:14:34,2024-10-24 11:14:34
+9_33,10_12,8_21,Praziquantel,Apply every 8 hours on affected area,2024-03-02 20:44:17,2024-03-02 20:44:17
+9_34,10_15,8_22,Amphotericin B,250mg at bedtime before breakfast,2024-10-14 17:04:55,2024-10-14 17:04:55
+9_35,10_27,8_22,Artemether and lumefantrine,250mg three times daily before breakfast,2024-10-14 17:04:45,2024-10-14 17:04:45
+9_36,10_5,8_23,Tobramycin,1 tablet every 12 hours for 3 days,2024-03-03 10:11:20,2024-03-03 10:11:20
+9_37,10_22,8_24,Ketoconazole,500mg three times daily after meals,2024-10-05 10:34:49,2024-10-05 10:34:49
+9_38,10_32,8_25,Mefloquine,500mg every 12 hours after meals,2024-03-24 18:25:50,2024-03-24 18:25:50
+9_39,10_4,8_25,Streptomycin,Apply every 8 hours on affected area,2024-03-24 18:25:34,2024-03-24 18:25:34
+9_40,10_18,8_26,Flubendazole,500mg every 8 hours after meals,2024-07-30 10:15:39,2024-07-30 10:15:39
+9_41,10_8,8_27,Ivermectin,1 tablet at bedtime for 6 days,2024-10-18 19:55:47,2024-10-18 19:55:47
+9_42,10_32,8_28,Mefloquine,250mg at bedtime before breakfast,2024-06-20 17:03:20,2024-06-20 17:03:20
+9_43,10_2,8_29,Gentamicin,Apply at bedtime on affected area,2024-05-14 18:23:21,2024-05-14 18:23:21
+9_44,10_15,8_30,Amphotericin B,Apply once daily on affected area,2024-07-18 15:15:56,2024-07-18 15:15:56
+9_45,10_12,8_31,Praziquantel,250mg twice daily before breakfast,2024-12-26 19:01:52,2024-12-26 19:01:52
+9_46,10_34,8_32,Sulfadoxine and Pyrimethamine,500mg twice daily after meals,2024-01-04 11:25:42,2024-01-04 11:25:42
+9_47,10_19,8_33,Fluconazole,1 tablet twice daily for 13 days,2024-09-03 13:21:30,2024-09-03 13:21:30
+9_48,10_11,8_34,Niclosamide,Take 5ml at bedtime when needed,2024-12-21 15:43:00,2024-12-21 15:43:00
+9_49,10_19,8_35,Fluconazole,Take 5ml every 8 hours when needed,2024-10-05 18:33:15,2024-10-05 18:33:15
+9_50,10_32,8_35,Mefloquine,1 tablet at bedtime for 9 days,2024-10-05 18:33:53,2024-10-05 18:33:53
+9_51,10_5,8_36,Tobramycin,Take 5ml three times daily when needed,2024-02-28 20:23:43,2024-02-28 20:23:43
+9_52,10_9,8_37,Levamisole,1 tablet every 8 hours for 7 days,2024-03-17 10:22:21,2024-03-17 10:22:21
+9_53,10_32,8_37,Mefloquine,Apply twice daily on affected area,2024-03-17 10:22:18,2024-03-17 10:22:18
+9_54,10_19,8_38,Fluconazole,Take 5ml every 12 hours when needed,2024-06-10 08:45:15,2024-06-10 08:45:15
+9_55,10_27,8_38,Artemether and lumefantrine,Take 5ml at bedtime when needed,2024-06-10 08:45:36,2024-06-10 08:45:36
+9_56,10_17,8_38,Caspofungin,1 tablet every 12 hours for 14 days,2024-06-10 08:46:00,2024-06-10 08:46:00
+9_57,10_10,8_39,Mebendazole,500mg at bedtime after meals,2024-05-08 11:45:26,2024-05-08 11:45:26
+9_58,10_8,8_39,Ivermectin,1 tablet at bedtime for 12 days,2024-05-08 11:45:59,2024-05-08 11:45:59
+9_59,10_18,8_39,Flubendazole,500mg every 8 hours after meals,2024-05-08 11:45:18,2024-05-08 11:45:18
+9_60,10_22,8_40,Ketoconazole,Apply every 12 hours on affected area,2024-05-08 16:52:41,2024-05-08 16:52:41
+9_61,10_31,8_41,Hydroxychloroquine,250mg at bedtime before breakfast,2024-04-20 12:05:27,2024-04-20 12:05:27
+9_62,10_21,8_42,Itraconazole,Take 5ml at bedtime when needed,2024-12-12 09:13:55,2024-12-12 09:13:55
+9_63,10_10,8_43,Mebendazole,250mg every 12 hours before breakfast,2024-11-14 19:13:21,2024-11-14 19:13:21
+9_64,10_14,8_44,Triclabendazole,500mg once daily after meals,2024-04-23 10:45:30,2024-04-23 10:45:30
+9_65,10_26,8_45,Posaconazole,Apply three times daily on affected area,2024-11-17 18:03:17,2024-11-17 18:03:17
+9_66,10_6,8_46,Albendazole,Take 5ml twice daily when needed,2024-11-29 19:42:29,2024-11-29 19:42:29
+9_67,10_14,8_46,Triclabendazole,Apply once daily on affected area,2024-11-29 19:42:21,2024-11-29 19:42:21
+9_68,10_3,8_47,Neomycin,500mg every 8 hours after meals,2024-12-12 15:51:18,2024-12-12 15:51:18
+9_69,10_6,8_47,Albendazole,Apply every 8 hours on affected area,2024-12-12 15:51:35,2024-12-12 15:51:35
+9_70,10_29,8_48,Artesunate and amodiaquine,500mg twice daily after meals,2024-01-18 13:01:40,2024-01-18 13:01:40
+9_71,10_8,8_49,Ivermectin,500mg every 12 hours after meals,2024-04-07 16:13:29,2024-04-07 16:13:29
+9_72,10_27,8_50,Artemether and lumefantrine,500mg every 8 hours after meals,2024-07-12 08:15:39,2024-07-12 08:15:39
