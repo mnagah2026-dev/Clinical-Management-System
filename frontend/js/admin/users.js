@@ -27,7 +27,16 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     async function loadUsers() {
         try {
-            tbody.innerHTML = `<tr><td colspan="6" style="text-align: center;"><div class="spinner"></div></td></tr>`;
+            tbody.textContent = '';
+            const tr = document.createElement('tr');
+            const td = document.createElement('td');
+            td.colSpan = 6;
+            td.style.textAlign = 'center';
+            const sp = document.createElement('div');
+            sp.className = 'spinner';
+            td.appendChild(sp);
+            tr.appendChild(td);
+            tbody.appendChild(tr);
             const data = await api.get('/portal/admin/users');
             allUsers = data.users || [];
             document.getElementById('total-users-cnt').textContent = data.total || allUsers.length;
@@ -35,29 +44,38 @@ document.addEventListener('DOMContentLoaded', async () => {
         } catch (err) {
             console.error('Failed to load users', err);
             Toast.error('Error fetching users from system.');
-            tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--error);">Failed to load users.</td></tr>`;
+            tbody.textContent = '';
+            const tr = document.createElement('tr');
+            const td = document.createElement('td');
+            td.colSpan = 6;
+            td.style.textAlign = 'center';
+            td.style.color = 'var(--error)';
+            td.textContent = 'Failed to load users.';
+            tr.appendChild(td);
+            tbody.appendChild(tr);
         }
     }
 
     function renderUsers(users) {
         if (users.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--on-surface-variant);">No users found.</td></tr>`;
+            tbody.textContent = '';
+            const tr = document.createElement('tr');
+            const td = document.createElement('td');
+            td.colSpan = 6;
+            td.style.textAlign = 'center';
+            td.style.color = 'var(--on-surface-variant)';
+            td.textContent = 'No users found.';
+            tr.appendChild(td);
+            tbody.appendChild(tr);
             return;
         }
 
-        tbody.innerHTML = users.map(u => {
+        tbody.textContent = '';
+        users.forEach(u => {
             let roleBadge = 'badge--secondary';
             if (u.role === 'Admin') roleBadge = 'badge--error';
             else if (u.role === 'Nurse') roleBadge = 'badge--primary';
             else if (u.role === 'Patient') roleBadge = 'badge--tertiary';
-
-            const statusHtml = u.is_active 
-                ? '<span style="color: var(--success); font-weight: 600;">Active</span>' 
-                : '<span style="color: var(--error); font-weight: 600;">Disabled</span>';
-
-            const actionBtn = u.is_active
-                ? `<button class="btn btn-ghost btn-sm" style="color: var(--error);" onclick="toggleStatus('${u.id}', false)">Disable</button>`
-                : `<button class="btn btn-ghost btn-sm" style="color: var(--success);" onclick="toggleStatus('${u.id}', true)">Enable</button>`;
 
             let login = 'Never';
             if (u.last_login) {
@@ -65,17 +83,58 @@ document.addEventListener('DOMContentLoaded', async () => {
                 login = ls.toLocaleDateString() + ' ' + ls.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
             }
 
-            return `<tr>
-                <td style="font-family: var(--font-label);">${u.id}</td>
-                <td>${u.email}</td>
-                <td><span class="badge ${roleBadge}">${u.role}</span></td>
-                <td>${statusHtml}</td>
-                <td style="font-family: var(--font-label); font-size: var(--body-sm);">${login}</td>
-                <td>
-                    ${u.id !== currentUserId ? actionBtn : '<span style="color: var(--on-surface-variant); font-size: var(--body-sm);">Self</span>'}
-                </td>
-            </tr>`;
-        }).join('');
+            const tr = document.createElement('tr');
+            
+            const tdId = document.createElement('td');
+            tdId.style.fontFamily = 'var(--font-label)';
+            tdId.textContent = u.id;
+            
+            const tdEmail = document.createElement('td');
+            tdEmail.textContent = u.email;
+            
+            const tdRole = document.createElement('td');
+            const roleSpan = document.createElement('span');
+            roleSpan.className = `badge ${roleBadge}`;
+            roleSpan.textContent = u.role;
+            tdRole.appendChild(roleSpan);
+            
+            const tdStatus = document.createElement('td');
+            const statusSpan = document.createElement('span');
+            if (u.is_active) {
+                statusSpan.style.color = 'var(--success)';
+                statusSpan.style.fontWeight = '600';
+                statusSpan.textContent = 'Active';
+            } else {
+                statusSpan.style.color = 'var(--error)';
+                statusSpan.style.fontWeight = '600';
+                statusSpan.textContent = 'Disabled';
+            }
+            tdStatus.appendChild(statusSpan);
+            
+            const tdLogin = document.createElement('td');
+            tdLogin.style.fontFamily = 'var(--font-label)';
+            tdLogin.style.fontSize = 'var(--body-sm)';
+            tdLogin.textContent = login;
+            
+            const tdAction = document.createElement('td');
+            if (u.id !== currentUserId) {
+                const btn = document.createElement('button');
+                btn.className = 'btn btn-ghost btn-sm';
+                btn.style.color = u.is_active ? 'var(--error)' : 'var(--success)';
+                btn.textContent = u.is_active ? 'Disable' : 'Enable';
+                btn.onclick = () => toggleStatus(u.id, !u.is_active);
+                tdAction.appendChild(btn);
+            } else {
+                const selfSpan = document.createElement('span');
+                selfSpan.style.color = 'var(--on-surface-variant)';
+                selfSpan.style.fontSize = 'var(--body-sm)';
+                selfSpan.textContent = 'Self';
+                tdAction.appendChild(selfSpan);
+            }
+            
+            tr.append(tdId, tdEmail, tdRole, tdStatus, tdLogin, tdAction);
+            tbody.appendChild(tr);
+        });
     }
 
     window.toggleStatus = async function(userId, isActive) {

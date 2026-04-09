@@ -7,9 +7,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
         const specs = await api.get('/portal/specializations');
         const select = document.getElementById('mu-specialization');
-        select.innerHTML = '<option value="">— Select —</option>' + specs.map(s => 
-            `<option value="${s.id}">${s.name}</option>`
-        ).join('');
+        select.textContent = '';
+        const defOpt = document.createElement('option');
+        defOpt.value = '';
+        defOpt.textContent = '— Select —';
+        select.appendChild(defOpt);
+        specs.forEach(s => {
+            const opt = document.createElement('option');
+            opt.value = s.id;
+            opt.textContent = s.name;
+            select.appendChild(opt);
+        });
     } catch (e) {
         console.error('Failed to load specializations', e);
     }

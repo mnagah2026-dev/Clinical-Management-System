@@ -43,9 +43,18 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Table
         const tbody = document.getElementById('today-appts-tbody');
         if (apptsToday.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--on-surface-variant);">No appointments scheduled for today.</td></tr>`;
+            tbody.textContent = '';
+            const tr = document.createElement('tr');
+            const td = document.createElement('td');
+            td.colSpan = 5;
+            td.style.textAlign = 'center';
+            td.style.color = 'var(--on-surface-variant)';
+            td.textContent = 'No appointments scheduled for today.';
+            tr.appendChild(td);
+            tbody.appendChild(tr);
         } else {
-            tbody.innerHTML = apptsToday.map(a => {
+            tbody.textContent = '';
+            apptsToday.forEach(a => {
                 const sDt = new Date(a.start_time);
                 const sTime = sDt.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
                 
@@ -54,16 +63,39 @@ document.addEventListener('DOMContentLoaded', async () => {
                 else if (a.status === 'cancelled') bClass = 'badge--error';
                 else if (a.status === 'in-progress') bClass = 'badge--warning';
 
-                return `<tr>
-                    <td style="font-family: var(--font-label);">${sTime}</td>
-                    <td style="font-weight: 500;">${a.patient_name}</td>
-                    <td style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${a.notes || ''}">${a.notes || '-'}</td>
-                    <td><span class="badge ${bClass}">${a.status}</span></td>
-                    <td>
-                        <button class="btn btn-tertiary" onclick="startConsultation('${a.patient_id}', '${a.id}')">Examine</button>
-                    </td>
-                </tr>`;
-            }).join('');
+                const tr = document.createElement('tr');
+                const tdTime = document.createElement('td');
+                tdTime.style.fontFamily = 'var(--font-label)';
+                tdTime.textContent = sTime;
+                
+                const tdName = document.createElement('td');
+                tdName.style.fontWeight = '500';
+                tdName.textContent = a.patient_name;
+                
+                const tdNotes = document.createElement('td');
+                tdNotes.style.maxWidth = '200px';
+                tdNotes.style.whiteSpace = 'nowrap';
+                tdNotes.style.overflow = 'hidden';
+                tdNotes.style.textOverflow = 'ellipsis';
+                tdNotes.title = a.notes || '';
+                tdNotes.textContent = a.notes || '-';
+                
+                const tdStatus = document.createElement('td');
+                const badge = document.createElement('span');
+                badge.className = `badge ${bClass}`;
+                badge.textContent = a.status;
+                tdStatus.appendChild(badge);
+                
+                const tdAction = document.createElement('td');
+                const btn = document.createElement('button');
+                btn.className = 'btn btn-tertiary';
+                btn.textContent = 'Examine';
+                btn.onclick = () => startConsultation(a.patient_id, a.id);
+                tdAction.appendChild(btn);
+                
+                tr.append(tdTime, tdName, tdNotes, tdStatus, tdAction);
+                tbody.appendChild(tr);
+            });
             
             initScrollAnimations();
         }

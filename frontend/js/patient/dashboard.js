@@ -43,27 +43,51 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Recent Appointments Table
         const tbody = document.getElementById('recent-appts-tbody');
         if (appointments.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: var(--on-surface-variant);">No appointments found.</td></tr>`;
+            tbody.textContent = '';
+            const tr = document.createElement('tr');
+            const td = document.createElement('td');
+            td.colSpan = 4;
+            td.style.cssText = 'text-align: center; color: var(--on-surface-variant);';
+            td.textContent = 'No appointments found.';
+            tr.appendChild(td);
+            tbody.appendChild(tr);
         } else {
             // Show only the 5 most recent/upcoming
             const recent = appointments.slice(0, 5);
-            tbody.innerHTML = recent.map(a => {
+            tbody.textContent = '';
+            recent.forEach(a => {
                 const dt = new Date(a.start_time).toLocaleString([], {year:'numeric', month:'short', day:'numeric', hour:'2-digit', minute:'2-digit'});
                 
                 let bClass = 'badge--primary';
                 if (a.status === 'completed') bClass = 'badge--success';
                 else if (a.status === 'cancelled') bClass = 'badge--error';
                 else if (a.status === 'in-progress') bClass = 'badge--warning';
-
-                return `<tr>
-                    <td style="font-family: var(--font-label);">${dt}</td>
-                    <td>${a.doctor_name}</td>
-                    <td><span class="badge ${bClass}">${a.status}</span></td>
-                    <td>
-                        <a href="/pages/patient/appointments.html" class="btn btn-tertiary">View</a>
-                    </td>
-                </tr>`;
-            }).join('');
+                
+                const tr = document.createElement('tr');
+                
+                const tdDt = document.createElement('td');
+                tdDt.style.fontFamily = 'var(--font-label)';
+                tdDt.textContent = dt;
+                
+                const tdDoc = document.createElement('td');
+                tdDoc.textContent = a.doctor_name;
+                
+                const tdStatus = document.createElement('td');
+                const badge = document.createElement('span');
+                badge.className = `badge ${bClass}`;
+                badge.textContent = a.status;
+                tdStatus.appendChild(badge);
+                
+                const tdAction = document.createElement('td');
+                const btn = document.createElement('a');
+                btn.href = '/pages/patient/appointments.html';
+                btn.className = 'btn btn-tertiary';
+                btn.textContent = 'View';
+                tdAction.appendChild(btn);
+                
+                tr.append(tdDt, tdDoc, tdStatus, tdAction);
+                tbody.appendChild(tr);
+            });
             
             initScrollAnimations();
         }

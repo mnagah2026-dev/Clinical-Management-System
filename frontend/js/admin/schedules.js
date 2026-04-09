@@ -22,30 +22,73 @@ document.addEventListener('DOMContentLoaded', async () => {
         currentDoctorId = document.getElementById('sched-doctor').value;
         if (!currentDoctorId) return Toast.error('Please select a doctor.');
         const tbody = document.getElementById('avail-tbody');
-        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;"><div class="spinner" style="margin:0 auto;"></div></td></tr>';
+        tbody.textContent = '';
+        const tr = document.createElement('tr');
+        const td = document.createElement('td');
+        td.colSpan = 5;
+        td.style.textAlign = 'center';
+        const sp = document.createElement('div');
+        sp.className = 'spinner';
+        sp.style.margin = '0 auto';
+        td.appendChild(sp);
+        tr.appendChild(td);
+        tbody.appendChild(tr);
         try {
             const avails = await api.get(`/portal/admin/availability/${currentDoctorId}`);
             const dayOrder = ['sun','mon','tue','wed','thu','fri','sat'];
             const dayLabel = {sun:'Sunday',mon:'Monday',tue:'Tuesday',wed:'Wednesday',thu:'Thursday',fri:'Friday',sat:'Saturday'};
             avails.sort((a,b) => dayOrder.indexOf(a.day_of_week) - dayOrder.indexOf(b.day_of_week));
             if (avails.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">No availability slots found.</td></tr>';
+                tbody.textContent = '';
+                const tr = document.createElement('tr');
+                const td = document.createElement('td');
+                td.colSpan = 5;
+                td.style.textAlign = 'center';
+                td.textContent = 'No availability slots found.';
+                tr.appendChild(td);
+                tbody.appendChild(tr);
                 return;
             }
-            tbody.innerHTML = avails.map(a => `
-                <tr>
-                    <td style="font-weight: 600;">${dayLabel[a.day_of_week] || a.day_of_week}</td>
-                    <td>${a.start_time}</td>
-                    <td>${a.end_time}</td>
-                    <td><span class="badge ${a.is_available ? 'badge--primary' : 'badge--secondary'}">${a.is_available ? 'Active' : 'Disabled'}</span></td>
-                    <td>
-                        <button class="btn btn-ghost btn-sm" onclick="toggleSlot('${a.id}', ${!a.is_available})">${a.is_available ? 'Disable' : 'Enable'}</button>
-                    </td>
-                </tr>
-            `).join('');
+            tbody.textContent = '';
+            avails.forEach(a => {
+                const tr = document.createElement('tr');
+                const tdDay = document.createElement('td');
+                tdDay.style.fontWeight = '600';
+                tdDay.textContent = dayLabel[a.day_of_week] || a.day_of_week;
+                
+                const tdStart = document.createElement('td');
+                tdStart.textContent = a.start_time;
+                
+                const tdEnd = document.createElement('td');
+                tdEnd.textContent = a.end_time;
+                
+                const tdBadge = document.createElement('td');
+                const badgeSpan = document.createElement('span');
+                badgeSpan.className = `badge ${a.is_available ? 'badge--primary' : 'badge--secondary'}`;
+                badgeSpan.textContent = a.is_available ? 'Active' : 'Disabled';
+                tdBadge.appendChild(badgeSpan);
+                
+                const tdAction = document.createElement('td');
+                const actionBtn = document.createElement('button');
+                actionBtn.className = 'btn btn-ghost btn-sm';
+                actionBtn.textContent = a.is_available ? 'Disable' : 'Enable';
+                actionBtn.onclick = () => toggleSlot(a.id, !a.is_available);
+                tdAction.appendChild(actionBtn);
+                
+                tr.append(tdDay, tdStart, tdEnd, tdBadge, tdAction);
+                tbody.appendChild(tr);
+            });
         } catch (e) {
             Toast.error('Failed to load availability.');
-            tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color: var(--error);">Error loading data.</td></tr>';
+            tbody.textContent = '';
+            const tr = document.createElement('tr');
+            const td = document.createElement('td');
+            td.colSpan = 5;
+            td.style.textAlign = 'center';
+            td.style.color = 'var(--error)';
+            td.textContent = 'Error loading data.';
+            tr.appendChild(td);
+            tbody.appendChild(tr);
         }
     }
 

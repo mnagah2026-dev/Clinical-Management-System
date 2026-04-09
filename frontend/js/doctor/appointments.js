@@ -24,11 +24,20 @@ document.addEventListener('DOMContentLoaded', async () => {
             const appts = await api.get(endpoint);
             
             if (appts.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--on-surface-variant);">No appointments scheduled for this date.</td></tr>`;
+                tbody.textContent = '';
+                const tr = document.createElement('tr');
+                const td = document.createElement('td');
+                td.colSpan = 6;
+                td.style.textAlign = 'center';
+                td.style.color = 'var(--on-surface-variant)';
+                td.textContent = 'No appointments scheduled for this date.';
+                tr.appendChild(td);
+                tbody.appendChild(tr);
                 return;
             }
 
-            tbody.innerHTML = appts.map(a => {
+            tbody.textContent = '';
+            appts.forEach(a => {
                 const sDt = new Date(a.start_time);
                 let timeFmt = sDt.toLocaleString([], {year:'numeric', month:'short', day:'numeric', hour:'2-digit', minute:'2-digit'});
                 if (dateStr) timeFmt = sDt.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
@@ -39,38 +48,87 @@ document.addEventListener('DOMContentLoaded', async () => {
                 else if (a.status === 'in-progress') bClass = 'badge--warning';
                 else if (a.status === 'missed') bClass = 'badge--error';
 
-                // Status dropdown
+                const tr = document.createElement('tr');
+                
+                const tdTime = document.createElement('td');
+                tdTime.style.fontFamily = 'var(--font-label)';
+                tdTime.textContent = timeFmt;
+                
+                const tdName = document.createElement('td');
+                tdName.style.fontWeight = '500';
+                tdName.textContent = a.patient_name;
+                
+                const tdNotes = document.createElement('td');
+                tdNotes.style.maxWidth = '200px';
+                tdNotes.style.whiteSpace = 'nowrap';
+                tdNotes.style.overflow = 'hidden';
+                tdNotes.style.textOverflow = 'ellipsis';
+                tdNotes.title = a.notes || '';
+                tdNotes.textContent = a.notes || '-';
+                
+                const tdStatusCell = document.createElement('td');
+                const badge = document.createElement('span');
+                badge.className = `badge ${bClass}`;
+                badge.textContent = a.status;
+                tdStatusCell.appendChild(badge);
+                
                 const isFinal = ['completed', 'cancelled', 'missed'].includes(a.status);
-                let statusSelectHtml = '-';
+                const tdSelect = document.createElement('td');
                 if (!isFinal) {
-                    statusSelectHtml = `
-                        <select onchange="updateAppointmentStatus('${a.id}', this.value)" class="input-field" style="padding: var(--space-2); min-width: 140px;">
-                            <option value="" disabled selected>Update...</option>
-                            <option value="scheduled">Scheduled</option>
-                            <option value="in-progress">In Progress</option>
-                            <option value="completed">Completed</option>
-                            <option value="missed">Missed</option>
-                            <option value="cancelled">Cancelled</option>
-                        </select>
-                    `;
+                    const sel = document.createElement('select');
+                    sel.className = 'input-field';
+                    sel.style.padding = 'var(--space-2)';
+                    sel.style.minWidth = '140px';
+                    sel.onchange = function() { updateAppointmentStatus(a.id, this.value); };
+                    
+                    const optDefs = [
+                        {val: '', text: 'Update...', disabled: true, selected: true},
+                        {val: 'scheduled', text: 'Scheduled'},
+                        {val: 'in-progress', text: 'In Progress'},
+                        {val: 'completed', text: 'Completed'},
+                        {val: 'missed', text: 'Missed'},
+                        {val: 'cancelled', text: 'Cancelled'}
+                    ];
+                    optDefs.forEach(def => {
+                        const opt = document.createElement('option');
+                        opt.value = def.val;
+                        opt.textContent = def.text;
+                        if (def.disabled) opt.disabled = true;
+                        if (def.selected) opt.selected = true;
+                        sel.appendChild(opt);
+                    });
+                    tdSelect.appendChild(sel);
+                } else {
+                    tdSelect.textContent = '-';
                 }
-
-                return `<tr>
-                    <td style="font-family: var(--font-label);">${timeFmt}</td>
-                    <td style="font-weight: 500;">${a.patient_name}</td>
-                    <td style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${a.notes || ''}">${a.notes || '-'}</td>
-                    <td><span class="badge ${bClass}">${a.status}</span></td>
-                    <td>${statusSelectHtml}</td>
-                    <td>
-                        <button class="btn btn-tertiary" onclick="startConsultation('${a.patient_id}', '${a.id}')" ${isFinal ? 'disabled style="opacity:0.5"' : ''}>Consult</button>
-                    </td>
-                </tr>`;
-            }).join('');
+                
+                const tdAction = document.createElement('td');
+                const btn = document.createElement('button');
+                btn.className = 'btn btn-tertiary';
+                btn.textContent = 'Consult';
+                btn.onclick = () => startConsultation(a.patient_id, a.id);
+                if (isFinal) {
+                    btn.disabled = true;
+                    btn.style.opacity = '0.5';
+                }
+                tdAction.appendChild(btn);
+                
+                tr.append(tdTime, tdName, tdNotes, tdStatusCell, tdSelect, tdAction);
+                tbody.appendChild(tr);
+            });
             
         } catch (err) {
             console.error(err);
             Toast.error('Failed to load appointments.');
-            tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--error);">Error loading data.</td></tr>`;
+            tbody.textContent = '';
+            const tr = document.createElement('tr');
+            const td = document.createElement('td');
+            td.colSpan = 6;
+            td.style.textAlign = 'center';
+            td.style.color = 'var(--error)';
+            td.textContent = 'Error loading data.';
+            tr.appendChild(td);
+            tbody.appendChild(tr);
         }
     }
 

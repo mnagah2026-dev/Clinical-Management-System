@@ -27,25 +27,49 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (!q) return;
 
         try {
-            searchResults.innerHTML = `<div class="spinner" style="margin: 0 auto;"></div>`;
+            searchResults.textContent = '';
+            const sp = document.createElement('div');
+            sp.className = 'spinner';
+            sp.style.margin = '0 auto';
+            searchResults.appendChild(sp);
             const patients = await api.get(`/portal/patients/search?q=${encodeURIComponent(q)}`);
             
             if (patients.length === 0) {
-                searchResults.innerHTML = `<div style="text-align: center; color: var(--on-surface-variant); padding: var(--space-4); font-size: var(--body-sm);">No patients found.</div>`;
+                searchResults.textContent = '';
+                const msg = document.createElement('div');
+                msg.style.cssText = 'text-align: center; color: var(--on-surface-variant); padding: var(--space-4); font-size: var(--body-sm);';
+                msg.textContent = 'No patients found.';
+                searchResults.appendChild(msg);
                 return;
             }
 
-            searchResults.innerHTML = patients.map(p => `
-                <div class="card card--interactive" style="padding: var(--space-3);" onclick='loadPatientDetails(${JSON.stringify(p)})'>
-                    <div style="font-weight: 600;">${p.first_name} ${p.last_name}</div>
-                    <div style="font-size: var(--label-sm); font-family: var(--font-label); color: var(--outline); margin-top: 4px;">ID: ${p.id}</div>
-                </div>
-            `).join('');
+            searchResults.textContent = '';
+            patients.forEach(p => {
+                const div = document.createElement('div');
+                div.className = 'card card--interactive';
+                div.style.padding = 'var(--space-3)';
+                div.onclick = () => loadPatientDetails(p);
+                
+                const nameDiv = document.createElement('div');
+                nameDiv.style.fontWeight = '600';
+                nameDiv.textContent = p.first_name + ' ' + p.last_name;
+                
+                const idDiv = document.createElement('div');
+                idDiv.style.cssText = 'font-size: var(--label-sm); font-family: var(--font-label); color: var(--outline); margin-top: 4px;';
+                idDiv.textContent = 'ID: ' + p.id;
+                
+                div.append(nameDiv, idDiv);
+                searchResults.appendChild(div);
+            });
             
         } catch (err) {
             console.error(err);
             Toast.error('Search failed.');
-            searchResults.innerHTML = `<div style="color: var(--error); padding: var(--space-4);">Search error.</div>`;
+            searchResults.textContent = '';
+            const errDiv = document.createElement('div');
+            errDiv.style.cssText = 'color: var(--error); padding: var(--space-4);';
+            errDiv.textContent = 'Search error.';
+            searchResults.appendChild(errDiv);
         }
     });
 
@@ -65,8 +89,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         };
 
         // Load concurrent streams (Vitals and History)
-        containerVitals.innerHTML = `<div class="spinner"></div>`;
-        containerHistory.innerHTML = `<div class="spinner"></div>`;
+        containerVitals.textContent = '';
+        const vSp = document.createElement('div');
+        vSp.className = 'spinner';
+        containerVitals.appendChild(vSp);
+        containerHistory.textContent = '';
+        const hSp = document.createElement('div');
+        hSp.className = 'spinner';
+        containerHistory.appendChild(hSp);
 
         try {
             const [vitals, history] = await Promise.all([
@@ -76,33 +106,56 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             // Render Vitals
             if (vitals.length === 0) {
-                containerVitals.innerHTML = '<span style="color: var(--on-surface-variant);">No vital signs recorded yet.</span>';
+                containerVitals.textContent = '';
+                const sp1 = document.createElement('span');
+                sp1.style.color = 'var(--on-surface-variant)';
+                sp1.textContent = 'No vital signs recorded yet.';
+                containerVitals.appendChild(sp1);
             } else {
-                containerVitals.innerHTML = vitals.slice(0, 5).map(v => {
+                containerVitals.textContent = '';
+                vitals.slice(0, 5).forEach(v => {
                     const dt = new Date(v.measured_at).toLocaleString([], {month:'short', day:'numeric', hour:'2-digit', minute:'2-digit'});
                     
                     let bgTint = 'var(--surface-container-high)';
                     let borderCol = 'var(--outline)';
                     if (v.temperature < 35.0) { borderCol = '#00008B'; bgTint = 'rgba(0,0,139,0.1)'; }
                     else if (v.temperature >= 36.5 && v.temperature <= 37.5) { borderCol = 'var(--success)'; bgTint = 'rgba(122,232,160,0.1)'; }
-                    else if (v.temperature >= 37.6 && v.temperature <= 38.4) { borderCol = '#FFD700'; bgTint = 'rgba(255,215,0,0.1)'; } // Yellow
-                    else if (v.temperature >= 38.5 && v.temperature <= 39.9) { borderCol = '#FFA500'; bgTint = 'rgba(255,165,0,0.1)'; } // Orange
+                    else if (v.temperature >= 37.6 && v.temperature <= 38.4) { borderCol = '#FFD700'; bgTint = 'rgba(255,215,0,0.1)'; }
+                    else if (v.temperature >= 38.5 && v.temperature <= 39.9) { borderCol = '#FFA500'; bgTint = 'rgba(255,165,0,0.1)'; }
                     else if (v.temperature >= 40.0) { borderCol = 'var(--error)'; bgTint = 'rgba(255,110,132,0.1)'; }
-                    else { borderCol = '#ADD8E6'; bgTint = 'rgba(173,216,230,0.1)'; } // 35.0 - 36.4 (mild decrease, light blue)
+                    else { borderCol = '#ADD8E6'; bgTint = 'rgba(173,216,230,0.1)'; }
 
-                    return `
-                        <div style="background: ${bgTint}; border-left: 4px solid ${borderCol}; padding: var(--space-3); border-radius: var(--radius-sm); margin-bottom: var(--space-2); display: flex; flex-wrap: wrap; gap: var(--space-4);">
-                           <div style="flex: 1 1 100%; border-bottom: 1px solid rgba(68,70,78,0.2); padding-bottom: 4px; margin-bottom: 4px;">
-                              <strong style="color: var(--primary); font-family: var(--font-label);">Visit #${v.visit_number}</strong> — ${dt}
-                           </div>
-                           <div><strong>BP:</strong> <span style="font-family: var(--font-label);">${v.blood_pressure_systolic}/${v.blood_pressure_diastolic}</span></div>
-                           <div><strong>Temp:</strong> <span style="font-family: var(--font-label);">${v.temperature}</span> °C</div>
-                           <div><strong>Sugar:</strong> <span style="font-family: var(--font-label);">${v.blood_sugar || '--'}</span> mg/dL</div>
-                           <div><strong>Weight:</strong> <span style="font-family: var(--font-label);">${v.weight}</span> kg</div>
-                           <div><strong>Height:</strong> <span style="font-family: var(--font-label);">${v.height || '--'}</span> cm</div>
-                        </div>
-                    `;
-                }).join('');
+                    const div = document.createElement('div');
+                    div.style.cssText = `background: ${bgTint}; border-left: 4px solid ${borderCol}; padding: var(--space-3); border-radius: var(--radius-sm); margin-bottom: var(--space-2); display: flex; flex-wrap: wrap; gap: var(--space-4);`;
+                    
+                    const headDiv = document.createElement('div');
+                    headDiv.style.cssText = 'flex: 1 1 100%; border-bottom: 1px solid rgba(68,70,78,0.2); padding-bottom: 4px; margin-bottom: 4px;';
+                    const strVar = document.createElement('strong');
+                    strVar.style.cssText = 'color: var(--primary); font-family: var(--font-label);';
+                    strVar.textContent = 'Visit #' + v.visit_number;
+                    headDiv.appendChild(strVar);
+                    headDiv.appendChild(document.createTextNode(' — ' + dt));
+                    
+                    const addStat = (label, val, unit) => {
+                        const d = document.createElement('div');
+                        const s1 = document.createElement('strong');
+                        s1.textContent = label + ': ';
+                        const s2 = document.createElement('span');
+                        s2.style.fontFamily = 'var(--font-label)';
+                        s2.textContent = val;
+                        d.append(s1, s2, document.createTextNode(unit));
+                        return d;
+                    };
+                    
+                    div.append(headDiv,
+                        addStat('BP', v.blood_pressure_systolic + '/' + v.blood_pressure_diastolic, ''),
+                        addStat('Temp', v.temperature, ' °C'),
+                        addStat('Sugar', v.blood_sugar || '--', ' mg/dL'),
+                        addStat('Weight', v.weight, ' kg'),
+                        addStat('Height', v.height || '--', ' cm')
+                    );
+                    containerVitals.appendChild(div);
+                });
 
                 // Render Charts (Rule 20)
                 if (vitals.length >= 2) {
@@ -138,34 +191,68 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             // Render History
             if (history.length === 0) {
-                containerHistory.innerHTML = '<span style="color: var(--on-surface-variant);">No medical history available.</span>';
+                containerHistory.textContent = '';
+                const sp2 = document.createElement('span');
+                sp2.style.color = 'var(--on-surface-variant)';
+                sp2.textContent = 'No medical history available.';
+                containerHistory.appendChild(sp2);
             } else {
-                containerHistory.innerHTML = history.map(h => {
+                containerHistory.textContent = '';
+                history.forEach(h => {
                     const dt = new Date(h.created_at).toLocaleString([], {year:'numeric', month:'long', day:'numeric'});
                     
-                    let pxHtml = '';
+                    const div = document.createElement('div');
+                    div.style.cssText = 'margin-bottom: var(--space-4); border: 1px solid rgba(68,70,78,0.15); border-radius: var(--radius-md); padding: var(--space-4);';
+                    
+                    const d1 = document.createElement('div');
+                    d1.style.cssText = 'font-family: var(--font-label); font-size: var(--label-sm); color: var(--outline); margin-bottom: var(--space-1);';
+                    d1.textContent = dt + ' • Record ID: ' + h.id;
+                    
+                    const d2 = document.createElement('div');
+                    d2.style.cssText = 'font-weight: 700; font-size: 1.1rem; color: var(--on-surface); margin-bottom: var(--space-2);';
+                    d2.textContent = h.diagnosis || 'Undiagnosed';
+                    
+                    const d3 = document.createElement('div');
+                    d3.style.cssText = 'color: var(--on-surface-variant); margin-bottom: var(--space-3); line-height: 1.5;';
+                    d3.textContent = h.treatment_plan || 'No detailed clinical notes provided.';
+                    
+                    div.append(d1, d2, d3);
+                    
                     if (h.prescriptions && h.prescriptions.length > 0) {
-                        pxHtml = `<div style="margin-top: var(--space-2); padding-left: var(--space-3); border-left: 2px solid var(--primary); margin-bottom: var(--space-2);">
-                            <strong style="color: var(--outline); font-size: 0.8rem; text-transform: uppercase;">Prescriptions:</strong><br>
-                            ${h.prescriptions.map(p => `• ${p.drug_name} — <em>${p.dosage}</em> (${p.frequency})`).join('<br>')}
-                        </div>`;
+                        const pxDiv = document.createElement('div');
+                        pxDiv.style.cssText = 'margin-top: var(--space-2); padding-left: var(--space-3); border-left: 2px solid var(--primary); margin-bottom: var(--space-2);';
+                        const pxStr = document.createElement('strong');
+                        pxStr.style.cssText = 'color: var(--outline); font-size: 0.8rem; text-transform: uppercase;';
+                        pxStr.textContent = 'Prescriptions:';
+                        pxDiv.appendChild(pxStr);
+                        pxDiv.appendChild(document.createElement('br'));
+                        
+                        h.prescriptions.forEach(p => {
+                            pxDiv.appendChild(document.createTextNode('• ' + p.drug_name + ' — '));
+                            const em = document.createElement('em');
+                            em.textContent = p.dosage;
+                            pxDiv.appendChild(em);
+                            pxDiv.appendChild(document.createTextNode(' (' + p.frequency + ')'));
+                            pxDiv.appendChild(document.createElement('br'));
+                        });
+                        div.appendChild(pxDiv);
                     }
-
-                    return `
-                        <div style="margin-bottom: var(--space-4); border: 1px solid rgba(68,70,78,0.15); border-radius: var(--radius-md); padding: var(--space-4);">
-                           <div style="font-family: var(--font-label); font-size: var(--label-sm); color: var(--outline); margin-bottom: var(--space-1);">${dt} • Record ID: ${h.id}</div>
-                           <div style="font-weight: 700; font-size: 1.1rem; color: var(--on-surface); margin-bottom: var(--space-2);">${h.diagnosis || 'Undiagnosed'}</div>
-                           <div style="color: var(--on-surface-variant); margin-bottom: var(--space-3); line-height: 1.5;">${h.treatment_plan || 'No detailed clinical notes provided.'}</div>
-                           ${pxHtml}
-                        </div>
-                    `;
-                }).join('');
+                    containerHistory.appendChild(div);
+                });
             }
 
         } catch (err) {
             console.error('Failed to fetch patient details', err);
-            containerVitals.innerHTML = `<span style="color: var(--error);">Error loading vitals.</span>`;
-            containerHistory.innerHTML = `<span style="color: var(--error);">Error loading history.</span>`;
+            containerVitals.textContent = '';
+            const e1 = document.createElement('span');
+            e1.style.color = 'var(--error)';
+            e1.textContent = 'Error loading vitals.';
+            containerVitals.appendChild(e1);
+            containerHistory.textContent = '';
+            const e2 = document.createElement('span');
+            e2.style.color = 'var(--error)';
+            e2.textContent = 'Error loading history.';
+            containerHistory.appendChild(e2);
         }
     };
 });

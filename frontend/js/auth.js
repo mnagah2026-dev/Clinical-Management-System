@@ -114,11 +114,26 @@ function updateNavAuth() {
 
   if (Auth.isLoggedIn()) {
     const role = Auth.getRole();
-    navActions.innerHTML = `
-      <span class="badge badge--primary" style="padding: 6px 14px;">${role}</span>
-      <a href="#" id="nav-dashboard" class="btn btn-secondary btn-sm">Dashboard</a>
-      <a href="#" id="nav-logout" class="btn btn-ghost btn-sm">Logout</a>
-    `;
+    navActions.textContent = '';
+    
+    const badge = document.createElement('span');
+    badge.className = 'badge badge--primary';
+    badge.style.padding = '6px 14px';
+    badge.textContent = role;
+    
+    const dashBtn = document.createElement('a');
+    dashBtn.href = '#';
+    dashBtn.id = 'nav-dashboard';
+    dashBtn.className = 'btn btn-secondary btn-sm';
+    dashBtn.textContent = 'Dashboard';
+    
+    const logoutBtn = document.createElement('a');
+    logoutBtn.href = '#';
+    logoutBtn.id = 'nav-logout';
+    logoutBtn.className = 'btn btn-ghost btn-sm';
+    logoutBtn.textContent = 'Logout';
+    
+    navActions.append(badge, dashBtn, logoutBtn);
     document.getElementById('nav-dashboard')?.addEventListener('click', (e) => {
       e.preventDefault();
       Auth.redirectToDashboard();

@@ -68,11 +68,19 @@ document.addEventListener('DOMContentLoaded', async () => {
             const appts = await api.get(endpoint);
             
             if (appts.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--on-surface-variant);">No appointments found.</td></tr>`;
+                tbody.textContent = '';
+                const tr = document.createElement('tr');
+                const td = document.createElement('td');
+                td.colSpan = 5;
+                td.style.cssText = 'text-align: center; color: var(--on-surface-variant);';
+                td.textContent = 'No appointments found.';
+                tr.appendChild(td);
+                tbody.appendChild(tr);
                 return;
             }
 
-            tbody.innerHTML = appts.map(a => {
+            tbody.textContent = '';
+            appts.forEach(a => {
                 const dtObj = new Date(a.start_time);
                 const dt = dtObj.toLocaleString([], {year:'numeric', month:'short', day:'numeric', hour:'2-digit', minute:'2-digit'});
                 
@@ -83,20 +91,41 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                 const notes = a.notes ? (a.notes.length > 30 ? a.notes.substring(0,30) + '...' : a.notes) : '-';
                 
-                let actionHtml = '-';
-                // Can only cancel future scheduled appointments
+                const tr = document.createElement('tr');
+                
+                const tdTime = document.createElement('td');
+                tdTime.style.fontFamily = 'var(--font-label)';
+                tdTime.textContent = dt;
+                
+                const tdDoc = document.createElement('td');
+                tdDoc.textContent = a.doctor_name;
+                
+                const tdStatus = document.createElement('td');
+                const badge = document.createElement('span');
+                badge.className = `badge ${bClass}`;
+                badge.textContent = a.status;
+                tdStatus.appendChild(badge);
+                
+                const tdNotes = document.createElement('td');
+                tdNotes.style.cssText = 'max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;';
+                tdNotes.title = a.notes || '';
+                tdNotes.textContent = notes;
+                
+                const tdAction = document.createElement('td');
                 if (a.status === 'scheduled' && dtObj > new Date()) {
-                    actionHtml = `<button class="btn btn-ghost btn-sm" onclick="cancelAppointment('${a.id}')" style="color: var(--error); border-color: rgba(255,110,132,0.3);">Cancel</button>`;
+                    const btn = document.createElement('button');
+                    btn.className = 'btn btn-ghost btn-sm';
+                    btn.style.cssText = 'color: var(--error); border-color: rgba(255,110,132,0.3);';
+                    btn.textContent = 'Cancel';
+                    btn.onclick = () => cancelAppointment(a.id);
+                    tdAction.appendChild(btn);
+                } else {
+                    tdAction.textContent = '-';
                 }
-
-                return `<tr>
-                    <td style="font-family: var(--font-label);">${dt}</td>
-                    <td>${a.doctor_name}</td>
-                    <td><span class="badge ${bClass}">${a.status}</span></td>
-                    <td style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${a.notes || ''}">${notes}</td>
-                    <td>${actionHtml}</td>
-                </tr>`;
-            }).join('');
+                
+                tr.append(tdTime, tdDoc, tdStatus, tdNotes, tdAction);
+                tbody.appendChild(tr);
+            });
         } catch (err) {
             console.error(err);
             Toast.error('Failed to load appointments.');
@@ -107,8 +136,17 @@ document.addEventListener('DOMContentLoaded', async () => {
         try {
             // Load all doctors for booking
             const doctors = await api.get('/portal/doctors');
-            doctorSelect.innerHTML = `<option value="">Choose a doctor...</option>` + 
-                doctors.map(d => `<option value="${d.id}">Dr. ${d.first_name} ${d.last_name} - ${d.specialization_name || 'General'}</option>`).join('');
+            doctorSelect.textContent = '';
+            const defOpt = document.createElement('option');
+            defOpt.value = '';
+            defOpt.textContent = 'Choose a doctor...';
+            doctorSelect.appendChild(defOpt);
+            doctors.forEach(d => {
+                const opt = document.createElement('option');
+                opt.value = d.id;
+                opt.textContent = `Dr. ${d.first_name} ${d.last_name} - ${d.specialization_name || 'General'}`;
+                doctorSelect.appendChild(opt);
+            });
         } catch (err) {
             console.error(err);
         }
@@ -120,22 +158,31 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (!docId || !targetDate) return;
 
         try {
-            timeSlots.innerHTML = 'Loading slots...';
+            timeSlots.textContent = 'Loading slots...';
             slotsContainer.classList.remove('hidden');
             
             const slots = await api.get(`/appointments/slots?doctor_id=${docId}&target_date=${targetDate}`);
             
             if (slots.length === 0) {
-                timeSlots.innerHTML = `<span style="color: var(--warning);">No slots available on this date.</span>`;
+                timeSlots.textContent = '';
+                const warnSpan = document.createElement('span');
+                warnSpan.style.color = 'var(--warning)';
+                warnSpan.textContent = 'No slots available on this date.';
+                timeSlots.appendChild(warnSpan);
                 btnSubmitBooking.disabled = true;
                 return;
             }
 
-            timeSlots.innerHTML = slots.map(s => `
-                <button type="button" class="btn btn-ghost btn-sm slot-btn" data-time="${s.start_time}" style="font-family: var(--font-label);">
-                    ${s.start_time}
-                </button>
-            `).join('');
+            timeSlots.textContent = '';
+            slots.forEach(s => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'btn btn-ghost btn-sm slot-btn';
+                btn.dataset.time = s.start_time;
+                btn.style.fontFamily = 'var(--font-label)';
+                btn.textContent = s.start_time;
+                timeSlots.appendChild(btn);
+            });
 
             // Add click listeners to slots
             document.querySelectorAll('.slot-btn').forEach(btn => {
@@ -154,7 +201,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         } catch (err) {
             console.error(err);
-            timeSlots.innerHTML = `<span style="color: var(--error);">Error loading slots.</span>`;
+            timeSlots.textContent = '';
+            const errSpan = document.createElement('span');
+            errSpan.style.color = 'var(--error)';
+            errSpan.textContent = 'Error loading slots.';
+            timeSlots.appendChild(errSpan);
         }
     }
 
@@ -169,7 +220,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         };
 
         try {
-            btnSubmitBooking.innerHTML = '<span class="spinner" style="width: 16px; height: 16px; border-width: 2px;"></span> Booking...';
+            btnSubmitBooking.textContent = '';
+            const sp = document.createElement('span');
+            sp.className = 'spinner';
+            sp.style.cssText = 'width: 16px; height: 16px; border-width: 2px;';
+            btnSubmitBooking.append(sp, document.createTextNode(' Booking...'));
             btnSubmitBooking.disabled = true;
 
             await api.post('/appointments/book', payload);
@@ -183,7 +238,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             console.error(err);
             Toast.error(err.detail || 'Failed to book appointment.');
         } finally {
-            btnSubmitBooking.innerHTML = 'Confirm Booking';
+            btnSubmitBooking.textContent = 'Confirm Booking';
             btnSubmitBooking.disabled = false;
         }
     });
@@ -195,7 +250,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         dateSelect.disabled = true;
         selectedTimeInput.value = '';
         slotsContainer.classList.add('hidden');
-        timeSlots.innerHTML = '';
+        timeSlots.textContent = '';
         btnSubmitBooking.disabled = true;
     }
 

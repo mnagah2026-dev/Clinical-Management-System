@@ -82,24 +82,46 @@ document.addEventListener('DOMContentLoaded', async () => {
         const idx = rxList.findIndex(x => x.name === name);
         if (idx > -1) rxList.splice(idx, 1);
         renderRxList();
-        document.getElementById('interaction-warnings').innerHTML = ''; // clear warnings if regimen changes
+        document.getElementById('interaction-warnings').textContent = ''; // clear warnings if regimen changes
     };
 
     function renderRxList() {
         if (rxList.length === 0) {
-            containerRx.innerHTML = `<div style="text-align: center; color: var(--on-surface-variant); font-size: var(--body-sm); padding: var(--space-4);">No drugs added yet.</div>`;
+            containerRx.textContent = '';
+            const msg = document.createElement('div');
+            msg.style.cssText = 'text-align: center; color: var(--on-surface-variant); font-size: var(--body-sm); padding: var(--space-4);';
+            msg.textContent = 'No drugs added yet.';
+            containerRx.appendChild(msg);
             return;
         }
 
-        containerRx.innerHTML = rxList.map(r => `
-            <div style="background: var(--surface-container-high); padding: var(--space-2) var(--space-4); border-radius: var(--radius-sm); display: flex; justify-content: space-between; align-items: center; border-left: 3px solid var(--secondary);">
-               <div>
-                  <strong style="color: var(--on-surface); font-size: var(--body-md);">${r.name}</strong>
-                  <span style="color: var(--outline); font-size: var(--body-sm); margin-left: var(--space-4); font-family: var(--font-label);">${r.dosage} — ${r.treatment}</span>
-               </div>
-               <button type="button" class="btn btn-tertiary" style="color: var(--error);" onclick="removeRx('${r.name}')">Remove</button>
-            </div>
-        `).join('');
+        containerRx.textContent = '';
+        rxList.forEach(r => {
+            const div = document.createElement('div');
+            div.style.cssText = 'background: var(--surface-container-high); padding: var(--space-2) var(--space-4); border-radius: var(--radius-sm); display: flex; justify-content: space-between; align-items: center; border-left: 3px solid var(--secondary);';
+            
+            const wrapper = document.createElement('div');
+            
+            const strong = document.createElement('strong');
+            strong.style.cssText = 'color: var(--on-surface); font-size: var(--body-md);';
+            strong.textContent = r.name;
+            
+            const span = document.createElement('span');
+            span.style.cssText = 'color: var(--outline); font-size: var(--body-sm); margin-left: var(--space-4); font-family: var(--font-label);';
+            span.textContent = r.dosage + ' — ' + r.treatment;
+            
+            wrapper.append(strong, span);
+            
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'btn btn-tertiary';
+            btn.style.color = 'var(--error)';
+            btn.textContent = 'Remove';
+            btn.onclick = () => removeRx(r.name);
+            
+            div.append(wrapper, btn);
+            containerRx.appendChild(div);
+        });
     }
 
     // Analyze Interactions
@@ -113,7 +135,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         const warnBox = document.getElementById('interaction-warnings');
         
         try {
-            warnBox.innerHTML = '<div class="spinner"></div>';
+            warnBox.textContent = '';
+            const sp = document.createElement('div');
+            sp.className = 'spinner';
+            warnBox.appendChild(sp);
             
             const warnings = await api.post('/clinical/interactions/check', { drug_names: names });
             
@@ -127,7 +152,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                        </div>
                     </div>`;
             } else {
-                warnBox.innerHTML = warnings.map(w => {
+                warnBox.textContent = '';
+                warnings.forEach(w => {
                     let levelColor = 'var(--warning)';
                     let levelBg = 'rgba(255,214,102,0.1)';
                     if (w.severity.toLowerCase() === 'major' || w.severity.toLowerCase() === 'severe') {
@@ -140,21 +166,39 @@ document.addEventListener('DOMContentLoaded', async () => {
                     const nameA = drugAObj ? drugAObj.name : w.drug_a;
                     const nameB = drugBObj ? drugBObj.name : w.drug_b;
 
-                    return `
-                    <div style="background: ${levelBg}; border: 1px solid ${levelColor}; padding: var(--space-4); border-radius: var(--radius-md); margin-bottom: var(--space-2);">
-                       <div style="font-weight: 700; color: ${levelColor}; margin-bottom: var(--space-1); text-transform: uppercase; font-size: var(--label-sm); font-family: var(--font-label);">${w.severity} INTERACTION</div>
-                       <strong style="color: var(--on-surface); font-size: var(--body-md); display: block; margin-bottom: var(--space-2);">${nameA} + ${nameB}</strong>
-                       <p style="font-size: var(--body-sm); color: var(--on-surface-variant); margin-bottom: var(--space-2); line-height: 1.5;">${w.description}</p>
-                       <div style="font-size: var(--body-sm); color: var(--on-surface); border-top: 1px solid rgba(68,70,78,0.2); padding-top: var(--space-2); font-family: var(--font-label);">
-                          <strong>Management:</strong> ${w.management || 'Clinical monitoring required.'}
-                       </div>
-                    </div>
-                    `;
-                }).join('');
+                    const div = document.createElement('div');
+                    div.style.cssText = `background: ${levelBg}; border: 1px solid ${levelColor}; padding: var(--space-4); border-radius: var(--radius-md); margin-bottom: var(--space-2);`;
+                    
+                    const sev = document.createElement('div');
+                    sev.style.cssText = `font-weight: 700; color: ${levelColor}; margin-bottom: var(--space-1); text-transform: uppercase; font-size: var(--label-sm); font-family: var(--font-label);`;
+                    sev.textContent = w.severity + ' INTERACTION';
+                    
+                    const str = document.createElement('strong');
+                    str.style.cssText = 'color: var(--on-surface); font-size: var(--body-md); display: block; margin-bottom: var(--space-2);';
+                    str.textContent = nameA + ' + ' + nameB;
+                    
+                    const p = document.createElement('p');
+                    p.style.cssText = 'font-size: var(--body-sm); color: var(--on-surface-variant); margin-bottom: var(--space-2); line-height: 1.5;';
+                    p.textContent = w.description;
+                    
+                    const mgt = document.createElement('div');
+                    mgt.style.cssText = 'font-size: var(--body-sm); color: var(--on-surface); border-top: 1px solid rgba(68,70,78,0.2); padding-top: var(--space-2); font-family: var(--font-label);';
+                    const mgtStr = document.createElement('strong');
+                    mgtStr.textContent = 'Management: ';
+                    mgt.appendChild(mgtStr);
+                    mgt.appendChild(document.createTextNode(w.management || 'Clinical monitoring required.'));
+                    
+                    div.append(sev, str, p, mgt);
+                    warnBox.appendChild(div);
+                });
             }
         } catch (err) {
             console.error(err);
-            warnBox.innerHTML = '<span style="color: var(--error);">Analysis failed network check.</span>';
+            warnBox.textContent = '';
+            const errSpan = document.createElement('span');
+            errSpan.style.color = 'var(--error)';
+            errSpan.textContent = 'Analysis failed network check.';
+            warnBox.appendChild(errSpan);
         }
     });
 
@@ -178,7 +222,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         const btn = document.getElementById('btn-submit');
 
         try {
-            btn.innerHTML = '<span class="spinner" style="width: 14px; height: 14px; border-width: 2px;"></span> Saving...';
+            btn.textContent = '';
+            const sp = document.createElement('span');
+            sp.className = 'spinner';
+            sp.style.cssText = 'width: 14px; height: 14px; border-width: 2px;';
+            btn.append(sp, document.createTextNode(' Saving...'));
             btn.disabled = true;
 
             const res = await api.post('/clinical/diagnosis', payload);
@@ -211,7 +259,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         } finally {
             if (btn.disabled) {
-                btn.innerHTML = 'Finalize Diagnosis';
+                btn.textContent = 'Finalize Diagnosis';
                 btn.disabled = false;
             }
         }
