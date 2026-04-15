@@ -13,7 +13,7 @@
 
 ## 🛠 التكنولوجيا المستخدمة
 
-### Backend (الخلفية)
+### Backend
 * **Framework:** FastAPI (Python)
 * **Database:** PostgreSQL (SQLAlchemy ORM)
 * **Security:** JWT (OAuth2), Bcrypt for password hashing
@@ -21,7 +21,7 @@
 * **Rate Limiting:** SlowAPI (Redis supported)
 * **Validation:** Pydantic models
 
-### Frontend (الواجهة الأمامية)
+### Frontend
 * **Core:** Vanilla JavaScript (ES6+)
 * **Styling:** Modern CSS (Custom Properties, Flexbox, Grid)
 * **Architecture:** API-based communication with centralized `api.js` service.
